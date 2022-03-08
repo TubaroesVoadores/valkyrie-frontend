@@ -7,6 +7,7 @@ import {
 
 import {
   LandingPage,
+  RegisterPage,
 } from './pages';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
   );
