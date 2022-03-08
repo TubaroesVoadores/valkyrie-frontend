@@ -1,5 +1,5 @@
 {
-  "name": "valkfly-frontend",
+  "name": "valkyrie-frontend",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -8,8 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stitches/react": "^1.2.7",
+    "aws-amplify": "^4.3.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-final-form": "^6.5.8",
     "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
