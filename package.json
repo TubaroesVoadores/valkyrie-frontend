@@ -8,11 +8,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/core": "^4.1.2",
+    "@mantine/dates": "^4.1.2",
+    "@mantine/dropzone": "^4.1.2",
+    "@mantine/form": "^4.1.2",
+    "@mantine/hooks": "^4.1.2",
+    "@mantine/modals": "^4.1.2",
     "@stitches/react": "^1.2.7",
     "aws-amplify": "^4.3.14",
+    "axios": "^0.26.1",
+    "dayjs": "^1.11.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.8",
+    "react-query": "^3.34.19",
     "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
