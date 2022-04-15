@@ -12,8 +12,9 @@ import {
 
 import {
   LandingPage,
-  RegisterPage,
+  LoginPage,
   PrivatePage,
+  ResetPasswordPage,
 } from './pages';
 
 import {
@@ -30,7 +31,8 @@ function App() {
       <AppContext.Provider value={authenticated}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login/reset" element={<ResetPasswordPage />} />
           <Route
             path="/private"
             element={(

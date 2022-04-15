@@ -1,10 +1,10 @@
 /* eslint-disable arrow-body-style */
 import React from 'react';
 
-export const RegisterPage = () => {
+export const ResetPasswordPage = () => {
   return (
     <div>
-      <h1>Register Page</h1>
+      <h1>Reset Password  Page</h1>
     </div>
   );
 };
