@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 
 import { Link } from 'react-router-dom';
 
-import '../scss/Login.scss';
+import '../styles/Login.scss';
 
 import {
   Button,
