@@ -1,3 +1,4 @@
 export { LandingPage } from './Landing';
-export { RegisterPage } from './Register';
+export { LoginPage } from './Login';
 export { PrivatePage } from './PrivatePage';
+export { ResetPasswordPage } from './ResetPassword';
