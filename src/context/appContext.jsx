@@ -9,11 +9,22 @@ export const useAppContext = () => useContext(AppContext);
 export const AppContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const logIn = (callback) => {
+    setIsAuthenticated(true);
+    callback();
+  };
+
+  const logOut = (callback) => {
+    setIsAuthenticated(false);
+    callback();
+  };
+
   return (
     <AppContext.Provider
       value={{
         isAuthenticated,
-        setIsAuthenticated,
+        logIn,
+        logOut,
       }}
     >
       {children}
