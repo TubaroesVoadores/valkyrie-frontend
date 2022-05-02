@@ -5,7 +5,7 @@ import {
   LandingPage,
   LoginPage,
   PrivatePage,
-  ResetPasswordPage,
+  ResetPassword,
 } from './pages';
 
 import { PrivateRoute } from './components';
@@ -15,7 +15,7 @@ export const App = () => (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/login/reset" element={<ResetPasswordPage />} />
+      <Route path="/login/reset" element={<ResetPassword />} />
       <Route
         path="/private"
         element={(
