@@ -1,108 +1,29 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { Plus } from 'react-feather';
-
 import {
   Title,
-  createStyles,
   Button,
+  SimpleGrid,
+  useMantineTheme,
+  Center,
 } from '@mantine/core';
 
-import {
-  WithHeader,
-  Project,
-} from '../components';
-
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '3rem 12.5rem 0',
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-      margin: '2rem 6.25rem 0',
-    },
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      margin: '1rem 2rem 0',
-    },
-  },
-  heading: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  projectsList: {
-    display: 'grid',
-    margin: '2rem 0',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gridGap: '1rem',
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    },
-    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    },
-  },
-}));
+import { axiosClient } from '../lib';
+import { WithHeader, Project, ConditionalComponent } from '../components';
+import { useProjectsStyles } from '../styles';
 
 const Projects = () => {
-  const navigate = useNavigate();
-  const { classes } = useStyles();
+  const theme = useMantineTheme();
+  const { classes } = useProjectsStyles();
 
-  const [projects, setProjects] = React.useState([
-    {
-      id: 1,
-      name: 'Project 1',
-      cidade: 'Ananindeua',
-      status: 'Criado',
-    },
-    {
-      id: 2,
-      name: 'Project 2',
-      cidade: 'Ananindeua',
-      status: 'Em analise',
-    },
-    {
-      id: 3,
-      name: 'Project 3',
-      cidade: 'Ananindeua',
-      status: 'Finalizado',
-    },
-    {
-      id: 4,
-      name: 'Project 4',
-      cidade: 'Ananindeua',
-      status: 'Criado',
-    },
-    {
-      id: 5,
-      name: 'Project 5',
-      cidade: 'Ananindeua',
-      status: 'Em analise',
-    },
-    {
-      id: 6,
-      name: 'Project 6',
-      cidade: 'Ananindeua',
-      status: 'Finalizado',
-    },
-    {
-      id: 7,
-      name: 'Project 7',
-      cidade: 'Ananindeua',
-      status: 'Criado',
-    },
-    {
-      id: 8,
-      name: 'Project 8',
-      cidade: 'Ananindeua',
-      status: 'Em analise',
-    },
-  ]);
+  const { data: projects, status } = useQuery('projects', async () => {
+    const response = await axiosClient.get('/projects');
+    return response.data;
+  });
 
-  const handleNewProject = () => {
-    console.log('new project');
-  };
+  const handleNewProject = () => {};
 
   return (
     <div className={classes.wrapper}>
@@ -118,12 +39,26 @@ const Projects = () => {
         </Button>
       </div>
       <div className={classes.projectsList}>
-        {
-          projects.map((project) => (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <Project key={project.id} {...project} />
-          ))
-        }
+        <ConditionalComponent
+          condition={status === 'success'}
+          fallback={<Center>Nenhum projeto encontrado</Center>}
+        >
+          <SimpleGrid
+            cols={5}
+            spacing="lg"
+            breakpoints={[
+              { maxWidth: theme.breakpoints.xl, cols: 4 },
+              { maxWidth: theme.breakpoints.md, cols: 3 },
+              { maxWidth: theme.breakpoints.sm, cols: 1 },
+            ]}
+          >
+            {
+              projects.map((project) => (
+                <Project key={project.id} {...project} />
+              ))
+            }
+          </SimpleGrid>
+        </ConditionalComponent>
       </div>
     </div>
   );

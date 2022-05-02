@@ -1,32 +1,48 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowUpRight } from 'react-feather';
+import { Text, ActionIcon } from '@mantine/core';
 
-import {
-  Button,
-  createStyles,
-} from '@mantine/core';
-
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '1rem',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-  },
-}));
+import { useProjectStyles } from '../styles';
 
 export const Project = (props) => {
   const {
+    id,
     name,
     cidade,
     status,
   } = props;
 
-  const { classes } = useStyles();
+  const navigate = useNavigate();
+  const { classes } = useProjectStyles();
+
+  const handleClick = () => {
+    navigate(`/projects/${id}`);
+  };
 
   return (
     <div className={classes.wrapper}>
-      <span>{name}</span>
+      <Text className={classes.title}>{name}</Text>
+      <div className={classes.detailsSection}>
+        <div className={classes.details}>
+          <Text className={classes.detailsTitle}>CIDADE</Text>
+          <Text size="sm">{cidade}</Text>
+        </div>
+        <div className={classes.details}>
+          <Text className={classes.detailsTitle}>STATUS</Text>
+          <Text size="sm">{status}</Text>
+        </div>
+      </div>
+      <ActionIcon
+        className={classes.icon}
+        size="lg"
+        variant="filled"
+        color="green"
+        onClick={handleClick}
+      >
+        <ArrowUpRight size={20} />
+      </ActionIcon>
     </div>
   );
 };
