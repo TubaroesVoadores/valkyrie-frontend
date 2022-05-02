@@ -24,6 +24,14 @@ export const App = () => (
           </PrivateRoute>
         )}
       />
+      <Route
+        path="/projects"
+        element={(
+          <PrivateRoute>
+            <ProjectsPage />
+          </PrivateRoute>
+        )}
+      />
     </Routes>
   </BrowserRouter>
 );

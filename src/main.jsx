@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClientProvider } from 'react-query';
+import { MantineProvider } from '@mantine/core';
 
 import { Amplify } from 'aws-amplify';
 import config from './config';
 import { App } from './App';
-import { queryClient } from './lib';
+import { mantineTheme, queryClient } from './lib';
 import { AppContextProvider } from './context/appContext';
 
 import './index.css';
@@ -38,7 +39,9 @@ ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AppContextProvider>
-        <App />
+        <MantineProvider theme={mantineTheme}>
+          <App />
+        </MantineProvider>
       </AppContextProvider>
     </QueryClientProvider>
   </React.StrictMode>,
