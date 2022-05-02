@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 
 import { axiosClient } from '../lib';
-import { WithHeader, Project, ConditionalComponent } from '../components';
+import { WithHeader, Project } from '../components';
 import { useProjectsStyles } from '../styles';
 
 const Projects = () => {
@@ -19,7 +19,8 @@ const Projects = () => {
   const { classes } = useProjectsStyles();
 
   const { data: projects, status } = useQuery('projects', async () => {
-    const response = await axiosClient.get('/projects');
+    const response = await axiosClient.get('projects');
+
     return response.data;
   });
 
@@ -39,26 +40,27 @@ const Projects = () => {
         </Button>
       </div>
       <div className={classes.projectsList}>
-        <ConditionalComponent
-          condition={status === 'success'}
-          fallback={<Center>Nenhum projeto encontrado</Center>}
-        >
-          <SimpleGrid
-            cols={5}
-            spacing="lg"
-            breakpoints={[
-              { maxWidth: theme.breakpoints.xl, cols: 4 },
-              { maxWidth: theme.breakpoints.md, cols: 3 },
-              { maxWidth: theme.breakpoints.sm, cols: 1 },
-            ]}
-          >
-            {
-              projects.map((project) => (
-                <Project key={project.id} {...project} />
-              ))
-            }
-          </SimpleGrid>
-        </ConditionalComponent>
+        {
+          status !== 'loading' ? (
+            <SimpleGrid
+              cols={5}
+              spacing="lg"
+              breakpoints={[
+                { maxWidth: theme.breakpoints.xl, cols: 4 },
+                { maxWidth: theme.breakpoints.md, cols: 3 },
+                { maxWidth: theme.breakpoints.sm, cols: 1 },
+              ]}
+            >
+              {
+                projects?.map((project) => (
+                  <Project key={project.id} {...project} />
+                ))
+              }
+            </SimpleGrid>
+          ) : (
+            <Center>Nenhum projeto encontrado</Center>
+          )
+        }
       </div>
     </div>
   );
