@@ -6,6 +6,7 @@ import {
   LoginPage,
   PrivatePage,
   ResetPassword,
+  ProjectsPage,
 } from './pages';
 
 import { PrivateRoute } from './components';
