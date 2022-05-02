@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 
 import '../styles/Login.scss';
 
+import { Auth } from 'aws-amplify';
+
 import {
   Button,
   PasswordInput,
