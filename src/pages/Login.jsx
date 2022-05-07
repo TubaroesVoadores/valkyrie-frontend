@@ -18,6 +18,8 @@ import {
   Title,
 } from '@mantine/core';
 
+import { useLoginStyles } from '../styles';
+
 import { useAppContext } from '../context/appContext';
 
 import Fundo from '../assets/fundo.svg';
@@ -26,6 +28,8 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const { logIn } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { classes } = useLoginStyles();
 
   const loginForm = useForm({
     initialValues: {
@@ -45,22 +49,20 @@ export const LoginPage = () => {
 
       setIsLoading(true);
       try {
-        await Auth.signIn(loginForm.values.email, loginForm.values.password)
+        await Auth.signIn(loginForm.values.email, loginForm.values.password);
         navigate('/projects');
       } catch (err) {
         setIsLoading(false);
         console.log(err);
-      };
+      }
     });
   };
 
-  console.log(loginForm.values.email);
-
   return (
-    <div className="loginPage__wrapper">
-      <div className="loginPage__formContainer">
+    <div className={classes.wrapper}>
+      <div className={classes.formWrapper}>
         <Box sx={{ maxWidth: 300 }} mx="auto">
-          <Title order={2} className="loginPage__formTitle">Bem-vindo à Valkyrie.</Title>
+          <Title order={2}>Bem-vindo à Valkyrie.</Title>
           <form onSubmit={loginForm.onSubmit(handleLogIn)}>
             <TextInput
               required
@@ -95,7 +97,8 @@ export const LoginPage = () => {
           </form>
         </Box>
       </div>
-      <div className="loginPage__imageContainer">
+
+      <div className={classes.imageWrapper}>
         <img src={Fundo} alt="fundo" />
       </div>
     </div>

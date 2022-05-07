@@ -9,7 +9,7 @@ import {
   ProjectsPage,
 } from './pages';
 
-import { PrivateRoute } from './components';
+import { PrivateRoute, RedirectRoute } from './components';
 
 export const App = () => (
   <BrowserRouter>

@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useContext, createContext, useState } from 'react';
+import { Auth } from 'aws-amplify';
+import { useEffect } from 'react/cjs/react.production.min';
 
 export const AppContext = createContext(null);
 
