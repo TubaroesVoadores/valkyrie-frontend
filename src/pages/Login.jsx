@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 
 import { useForm } from '@mantine/form';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import '../styles/Login.scss';
+
+import { Auth } from 'aws-amplify';
 
 import {
   Button,
@@ -16,12 +18,18 @@ import {
   Title,
 } from '@mantine/core';
 
+import { useLoginStyles } from '../styles';
+
+import { useAppContext } from '../context/appContext';
+
 import Fundo from '../assets/fundo.svg';
 
 export const LoginPage = () => {
-  // TODO: implementar context de autenticação
-  // const {setIsAuthenticaded} ...
+  const navigate = useNavigate();
+  const { logIn } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { classes } = useLoginStyles();
 
   const loginForm = useForm({
     initialValues: {
@@ -34,12 +42,28 @@ export const LoginPage = () => {
     },
   });
 
+  const handleLogIn = () => {
+    logIn(async () => {
+      // eslint-disable-next-line no-restricted-globals
+      event.preventDefault();
+
+      setIsLoading(true);
+      try {
+        await Auth.signIn(loginForm.values.email, loginForm.values.password);
+        navigate('/projects');
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err);
+      }
+    });
+  };
+
   return (
-    <div className="loginPage__wrapper">
-      <div className="loginPage__formContainer">
+    <div className={classes.wrapper}>
+      <div className={classes.formWrapper}>
         <Box sx={{ maxWidth: 300 }} mx="auto">
-          <Title order={2} className="loginPage__formTitle">Bem-vindo à Valkyrie.</Title>
-          <form onSubmit={loginForm.onSubmit(() => setIsLoading(true))}>
+          <Title order={2}>Bem-vindo à Valkyrie.</Title>
+          <form onSubmit={loginForm.onSubmit(handleLogIn)}>
             <TextInput
               required
               label="Seu e-mail"
@@ -73,7 +97,8 @@ export const LoginPage = () => {
           </form>
         </Box>
       </div>
-      <div className="loginPage__imageContainer">
+
+      <div className={classes.imageWrapper}>
         <img src={Fundo} alt="fundo" />
       </div>
     </div>
