@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 
 import { axiosClient } from '../lib';
-import { WithHeader, Project } from '../components';
+import { WithHeader, ProjectCard } from '../components';
 import { useProjectsStyles } from '../styles';
 
 const Projects = () => {
@@ -53,7 +53,7 @@ const Projects = () => {
             >
               {
                 projects?.map((project) => (
-                  <Project key={project.id} {...project} />
+                  <ProjectCard key={project.id} {...project} />
                 ))
               }
             </SimpleGrid>

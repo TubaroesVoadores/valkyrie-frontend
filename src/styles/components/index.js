@@ -1,2 +1,2 @@
 export { useHeaderStyles } from './Header';
-export { useProjectStyles } from './Project';
+export { useProjectCardStyles } from './ProjectCard';

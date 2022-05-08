@@ -5,7 +5,11 @@ import { useAppContext } from '../context/appContext';
 // eslint-disable-next-line react/prop-types
 export const PrivateRoute = ({ children }) => {
   const location = useLocation();
-  const { isAuthenticated } = useAppContext();
+  const { currentUser, loading } = useAppContext();
 
-  return isAuthenticated ? children : <Navigate to="/" state={{ from: location }} replace />;
+  if (loading) {
+    return null;
+  }
+
+  return currentUser ? children : <Navigate to="/login" state={{ from: location }} replace />;
 };
