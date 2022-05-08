@@ -23,7 +23,8 @@
     "react-final-form": "^6.5.8",
     "react-query": "^3.34.19",
     "react-router-dom": "^6.2.1",
-    "sass": "^1.50.0"
+    "sass": "^1.50.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",

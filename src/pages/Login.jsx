@@ -1,13 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
-
-import { useForm } from '@mantine/form';
-
 import { Link, useNavigate } from 'react-router-dom';
-
-import '../styles/Login.scss';
-
-import { Auth } from 'aws-amplify';
-
 import {
   Button,
   PasswordInput,
@@ -17,45 +10,49 @@ import {
   Center,
   Title,
 } from '@mantine/core';
-
-import { useLoginStyles } from '../styles';
+import { useForm, yupResolver } from '@mantine/form';
+import * as Yup from 'yup';
 
 import { useAppContext } from '../context/appContext';
-
+import { useLoginStyles } from '../styles';
 import Fundo from '../assets/fundo.svg';
+
+const schema = Yup.object().shape({
+  email: Yup.string().email('E-mail inválido').required('E-mail é obrigatório'),
+  password: Yup.string().min(8, 'Senha deve ter no mínimo 8 caracteres').required('Senha é obrigatória'),
+});
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { logIn } = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
-
   const { classes } = useLoginStyles();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const loginForm = useForm({
+    schema: yupResolver(schema),
     initialValues: {
       email: '',
       password: '',
     },
-
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'E-mail inválido'),
-    },
   });
 
-  const handleLogIn = () => {
-    logIn(async () => {
-      // eslint-disable-next-line no-restricted-globals
-      event.preventDefault();
+  const handleLogIn = async () => {
+    setIsLoading(true);
 
-      setIsLoading(true);
-      try {
-        await Auth.signIn(loginForm.values.email, loginForm.values.password);
+    const { email, password } = loginForm.values;
+
+    try {
+      await logIn({ email, password }, () => {
         navigate('/projects');
-      } catch (err) {
-        setIsLoading(false);
-        console.log(err);
-      }
-    });
+      });
+    } catch (error) {
+      setIsLoading(false);
+      loginForm.setErrors({
+        email: 'E-mail ou senha inválidos',
+        password: 'E-mail ou senha inválidos',
+      });
+    }
   };
 
   return (
@@ -63,24 +60,20 @@ export const LoginPage = () => {
       <div className={classes.formWrapper}>
         <Box sx={{ maxWidth: 300 }} mx="auto">
           <Title order={2}>Bem-vindo à Valkyrie.</Title>
-          <form onSubmit={loginForm.onSubmit(handleLogIn)}>
+          <form onSubmit={loginForm.onSubmit(handleLogIn)} className={classes.form}>
             <TextInput
               required
               label="Seu e-mail"
               placeholder="exemplo@mail.com"
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...loginForm.getInputProps('email')}
-              className="loginPage__loginForm"
             />
             <PasswordInput
               required
               label="Sua senha"
               placeholder="Digite sua senha"
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...loginForm.getInputProps('password')}
-              className="loginPage__passwordForm"
             />
-            <div className="loginPage__forgetPasswordText">
+            <div>
               <Anchor
                 component={Link}
                 to="/login/reset"
@@ -91,8 +84,21 @@ export const LoginPage = () => {
                 Esqueceu sua senha?
               </Anchor>
             </div>
-            <Center position="right" mt="md" fullWidth>
-              <Button size="lg" fullWidth type="submit" loading={isLoading} color="green">Entrar</Button>
+            <Center
+              position="right"
+              mt="md"
+              fullWidth
+              sx={{ marginTop: '0.5rem' }}
+            >
+              <Button
+                size="lg"
+                fullWidth
+                type="submit"
+                loading={isLoading}
+                color="green"
+              >
+                Entrar
+              </Button>
             </Center>
           </form>
         </Box>

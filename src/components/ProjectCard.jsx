@@ -4,18 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowUpRight } from 'react-feather';
 import { Text, ActionIcon } from '@mantine/core';
 
-import { useProjectStyles } from '../styles';
+import { useProjectCardStyles } from '../styles';
 
-export const Project = (props) => {
+export const ProjectCard = (props) => {
   const {
     id,
     name,
-    cidade,
+    city,
     status,
   } = props;
 
   const navigate = useNavigate();
-  const { classes } = useProjectStyles();
+  const { classes } = useProjectCardStyles();
 
   const handleClick = () => {
     navigate(`/projects/${id}`);
@@ -27,7 +27,7 @@ export const Project = (props) => {
       <div className={classes.detailsSection}>
         <div className={classes.details}>
           <Text className={classes.detailsTitle}>CIDADE</Text>
-          <Text size="sm">{cidade}</Text>
+          <Text size="sm">{city}</Text>
         </div>
         <div className={classes.details}>
           <Text className={classes.detailsTitle}>STATUS</Text>

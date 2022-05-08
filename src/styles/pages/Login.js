@@ -10,7 +10,6 @@ export const useLoginStyles = createStyles((theme) => ({
       justifyContent: 'center',
     },
   },
-
   formWrapper: {
     width: '1000px',
     height: '100vh',
@@ -21,22 +20,19 @@ export const useLoginStyles = createStyles((theme) => ({
       justifyContent: 'center',
       width: '100%',
     },
-
     h2: {
-      marginBottom: '32px',
+      marginBottom: '2rem',
     },
-
     a: {
       display: 'flex',
       justifyContent: 'flex-end',
-      marginTop: '16px',
-    },
-
-    input: {
-      marginBottom: '16px',
     },
   },
-
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+  },
   imageWrapper: {
     background: theme.colors.green[1],
     width: '50%',

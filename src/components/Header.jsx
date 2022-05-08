@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LogOut } from 'react-feather';
 
 import {
@@ -12,13 +12,11 @@ import { useAppContext } from '../context/appContext';
 import { useHeaderStyles } from '../styles';
 
 export const Header = () => {
-  const navigate = useNavigate();
-
   const { logOut } = useAppContext();
   const { classes } = useHeaderStyles();
 
   const handleLogOut = () => {
-    logOut(() => navigate('/login'));
+    logOut();
   };
 
   return (

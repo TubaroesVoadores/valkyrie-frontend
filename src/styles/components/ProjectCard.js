@@ -1,6 +1,6 @@
 import { createStyles } from '@mantine/core';
 
-export const useProjectStyles = createStyles((theme) => ({
+export const useProjectCardStyles = createStyles((theme) => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
