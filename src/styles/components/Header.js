@@ -8,10 +8,16 @@ export const useHeaderStyles = createStyles((theme) => ({
     alignItems: 'center',
     height: '80px',
     margin: '0 12.5rem',
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+    [`@media (max-width: ${theme.breakpoints.xl}px)`]: {
       margin: '0 6.25rem',
     },
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      margin: '0 3rem',
+    },
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      margin: '0 2rem',
+    },
+    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
       margin: '0 2rem',
     },
   },
