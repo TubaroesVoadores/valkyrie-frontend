@@ -35,6 +35,7 @@ export const Header = () => {
         variant="subtle"
         rightIcon={<LogOut size={24} className={classes.icon} />}
         onClick={handleLogOut}
+        compact
       >
         Sair
       </Button>
