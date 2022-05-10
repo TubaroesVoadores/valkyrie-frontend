@@ -27,16 +27,16 @@ export const AppContextProvider = ({ children }) => {
         },
       } = await Auth.currentAuthenticatedUser();
 
+      setLoading(false);
       setCurrentUser({
         name: userName,
         email: userEmail,
       });
     } catch (error) {
+      setLoading(false);
       setCurrentUser(null);
       throw error;
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -54,6 +54,7 @@ export const AppContextProvider = ({ children }) => {
         },
       } = await Auth.signIn(email, password);
 
+      setLoading(false);
       setCurrentUser({
         name: userName,
         email: userEmail,
@@ -61,15 +62,15 @@ export const AppContextProvider = ({ children }) => {
 
       callback();
     } catch (error) {
+      setLoading(false);
       setCurrentUser(null);
       throw error;
     }
-
-    setLoading(false);
   };
 
   const logOut = async () => {
     await Auth.signOut();
+    setLoading(false);
     setCurrentUser(null);
   };
 
