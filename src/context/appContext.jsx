@@ -25,14 +25,14 @@ export const AppContextProvider = ({ children }) => {
         },
       } = await Auth.currentAuthenticatedUser();
 
-      setLoading(false);
       setCurrentUser({
         name: userName,
         email: userEmail,
       });
-    } catch (error) {
       setLoading(false);
+    } catch (error) {
       setCurrentUser(null);
+      setLoading(false);
       throw error;
     }
   };
@@ -48,8 +48,8 @@ export const AppContextProvider = ({ children }) => {
       const response = await Auth.signIn(email, password);
 
       if (response.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        setLoading(false);
         withNewPassword();
+        setLoading(false);
       }
 
       const {
@@ -59,24 +59,24 @@ export const AppContextProvider = ({ children }) => {
         },
       } = response;
 
-      setLoading(false);
       setCurrentUser({
         name: userName,
         email: userEmail,
       });
+      setLoading(false);
 
       withLogin();
     } catch (error) {
-      setLoading(false);
       setCurrentUser(null);
+      setLoading(false);
       throw error;
     }
   };
 
   const logOut = async () => {
     await Auth.signOut();
-    setLoading(false);
     setCurrentUser(null);
+    setLoading(false);
   };
 
   return (
