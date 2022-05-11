@@ -9,8 +9,6 @@ import { Auth } from 'aws-amplify';
 
 export const AppContext = createContext(null);
 
-export const useAppContext = () => useContext(AppContext);
-
 // eslint-disable-next-line react/prop-types
 export const AppContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -43,16 +41,23 @@ export const AppContextProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const logIn = async ({ email, password }, callback) => {
+  const logIn = async ({ email, password }, withLogin, withNewPassword) => {
     setLoading(true);
 
     try {
+      const response = await Auth.signIn(email, password);
+
+      if (response.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        setLoading(false);
+        withNewPassword();
+      }
+
       const {
         attributes: {
           name: userName,
           email: userEmail,
         },
-      } = await Auth.signIn(email, password);
+      } = response;
 
       setLoading(false);
       setCurrentUser({
@@ -60,7 +65,7 @@ export const AppContextProvider = ({ children }) => {
         email: userEmail,
       });
 
-      callback();
+      withLogin();
     } catch (error) {
       setLoading(false);
       setCurrentUser(null);
@@ -88,3 +93,5 @@ export const AppContextProvider = ({ children }) => {
     </AppContext.Provider>
   );
 };
+
+export const useAppContext = () => useContext(AppContext);

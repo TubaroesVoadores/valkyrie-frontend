@@ -43,9 +43,11 @@ export const LoginPage = () => {
     const { email, password } = loginForm.values;
 
     try {
-      await logIn({ email, password }, () => {
-        navigate('/projects');
-      });
+      await logIn(
+        { email, password },
+        () => navigate('/projects'),
+        () => navigate('/login/new-password-required'),
+      );
     } catch (error) {
       setIsLoading(false);
       loginForm.setErrors({
