@@ -6,6 +6,7 @@ import {
   LoginPage,
   ResetPassword,
   ProjectsPage,
+  ProjectPage,
 } from './pages';
 
 import { PrivateRoute } from './components';
@@ -21,6 +22,14 @@ export const App = () => (
         element={(
           <PrivateRoute>
             <ProjectsPage />
+          </PrivateRoute>
+        )}
+      />
+      <Route
+        path="/projects/:projectId"
+        element={(
+          <PrivateRoute>
+            <ProjectPage />
           </PrivateRoute>
         )}
       />

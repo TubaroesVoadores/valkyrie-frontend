@@ -42,7 +42,7 @@ const Projects = () => {
       </div>
       <div className={classes.projectsList}>
         {
-          status !== 'loading' ? (
+          (status !== 'loading') ? (
             <SimpleGrid
               cols={5}
               spacing="lg"
