@@ -9,8 +9,6 @@ import { Auth } from 'aws-amplify';
 
 export const AppContext = createContext(null);
 
-export const useAppContext = () => useContext(AppContext);
-
 // eslint-disable-next-line react/prop-types
 export const AppContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -31,46 +29,54 @@ export const AppContextProvider = ({ children }) => {
         name: userName,
         email: userEmail,
       });
+      setLoading(false);
     } catch (error) {
       setCurrentUser(null);
+      setLoading(false);
       throw error;
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {
     checkAuth();
   }, []);
 
-  const logIn = async ({ email, password }, callback) => {
+  const logIn = async ({ email, password }, withLogin, withNewPassword) => {
     setLoading(true);
 
     try {
+      const response = await Auth.signIn(email, password);
+
+      if (response.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        withNewPassword();
+        setLoading(false);
+      }
+
       const {
         attributes: {
           name: userName,
           email: userEmail,
         },
-      } = await Auth.signIn(email, password);
+      } = response;
 
       setCurrentUser({
         name: userName,
         email: userEmail,
       });
+      setLoading(false);
 
-      callback();
+      withLogin();
     } catch (error) {
       setCurrentUser(null);
+      setLoading(false);
       throw error;
     }
-
-    setLoading(false);
   };
 
   const logOut = async () => {
     await Auth.signOut();
     setCurrentUser(null);
+    setLoading(false);
   };
 
   return (
@@ -87,3 +93,5 @@ export const AppContextProvider = ({ children }) => {
     </AppContext.Provider>
   );
 };
+
+export const useAppContext = () => useContext(AppContext);
