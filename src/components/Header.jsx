@@ -24,7 +24,7 @@ export const Header = () => {
       <Anchor
         className={classes.anchor}
         component={Link}
-        to="/"
+        to="/projects"
       >
         <Title order={2}>
           valkyrie

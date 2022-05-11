@@ -9,14 +9,28 @@ import {
   ProjectPage,
 } from './pages';
 
-import { PrivateRoute } from './components';
+import { PrivateRoute, RedirectRoute } from './components';
 
 export const App = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/login/reset" element={<ResetPassword />} />
+      <Route
+        path="/login"
+        element={(
+          <RedirectRoute>
+            <LoginPage />
+          </RedirectRoute>
+        )}
+      />
+      <Route
+        path="/login/reset"
+        element={(
+          <RedirectRoute>
+            <ResetPassword />
+          </RedirectRoute>
+        )}
+      />
       <Route
         path="/projects"
         element={(
