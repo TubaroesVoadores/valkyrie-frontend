@@ -1,11 +1,21 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { Center, Loader } from '@mantine/core';
+
 import { useAppContext } from '../context/appContext';
 
 // eslint-disable-next-line react/prop-types
-export const RedirectRoute = ({ children, route }) => {
+export const RedirectRoute = ({ children }) => {
   const location = useLocation();
-  const { currentUser } = useAppContext();
+  const { currentUser, loading } = useAppContext();
 
-  return !currentUser ? children : <Navigate to={`/${route}`} state={{ from: location }} replace />;
+  if (loading) {
+    return (
+      <Center sx={{ height: '100vh' }}>
+        <Loader color="green" />
+      </Center>
+    );
+  }
+
+  return !currentUser ? children : <Navigate to="/projects" state={{ from: location }} replace />;
 };
