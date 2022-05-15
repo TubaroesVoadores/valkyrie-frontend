@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 
 import { Auth } from 'aws-amplify';
 
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import {
   Button,
@@ -171,10 +171,9 @@ export const ResetPassword = () => {
   return (
     <div>
       {!codeSent
-        ?  renderRequestCodeForm()
+        ? renderRequestCodeForm()
         : !confirmed
-          ? renderConfirmationForm()
-          : <p>Done</p>}
+          ? renderConfirmationForm() : <Navigate to="/login" />}
     </div>
   );
 };
