@@ -6,8 +6,6 @@ import { Auth } from 'aws-amplify';
 
 import { Link } from 'react-router-dom';
 
-import '../styles/ResetPassword.scss';
-
 import {
   Button,
   Text,
@@ -18,6 +16,8 @@ import {
   Title,
   PasswordInput,
 } from '@mantine/core';
+
+import { useResetPasswordStyles } from '../styles/pages/ResetPassword';
 
 import Fundo from '../assets/fundo.svg';
 
@@ -39,6 +39,8 @@ export const ResetPassword = () => {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'E-mail inválido'),
     },
   });
+
+  const { classes } = useResetPasswordStyles();
 
   const sendEmailCode = async () => {
     event.preventDefault();
@@ -70,14 +72,17 @@ export const ResetPassword = () => {
       console.log(error);
       setIsConfirming(false);
     }
-  }
+  };
 
   const renderRequestCodeForm = () => (
-    <div className="resetPasswordPage__wrapper">
-      <div className="resetPasswordPage__formContainer">
+    <div className={classes.wrapper}>
+      <div className={classes.formWrapper}>
         <Box sx={{ maxWidth: 340 }} mx="auto">
-          <Title order={2} className="resetPasswordPage__formTitle">Esqueceu a senha?</Title>
-          <Text size="md">Informe o seu e-mail e enviaremos um link para redefinir sua senha.</Text>
+          <Title order={2} className={classes.forgotTitle}>Esqueceu a senha?</Title>
+          <Text size="md" className={classes.informationText}>
+            Informe o seu e-mail e enviaremos
+            um link para redefinir sua senha.
+          </Text>
           <form onSubmit={resetPasswordForm.onSubmit(sendEmailCode)}>
             <TextInput
               required
@@ -85,9 +90,8 @@ export const ResetPassword = () => {
               placeholder="exemplo@mail.com"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...resetPasswordForm.getInputProps('email')}
-              className="resetPasswordPage__loginForm"
             />
-            <div className="resetPasswordPage__backToLogin">
+            <div>
               <Anchor
                 component={Link}
                 to="/login"
@@ -104,25 +108,24 @@ export const ResetPassword = () => {
           </form>
         </Box>
       </div>
-      <div className="resetPasswordPage__imageContainer">
+      <div className={classes.imageWrapper}>
         <img src={Fundo} alt="fundo" />
       </div>
     </div>
   );
 
   const renderConfirmationForm = () => (
-    <div className="resetPasswordPage__wrapper">
-      <div className="resetPasswordPage__formContainer">
-        <Box sx={{ maxWidth: 340 }} mx="auto">
-          <Title order={2} className="resetPasswordPage__formTitle">Redefinir a senha</Title>
-          <form onSubmit={resetPasswordForm.onSubmit(submitPasswordChange)}>
+    <div className={classes.wrapper}>
+      <div className={classes.formWrapper}>
+        <Box sx={{ width: 340 }} mx="auto">
+          <Title order={2} className={classes.resetTitle}>Redefinir a senha</Title>
+          <form onSubmit={resetPasswordForm.onSubmit(submitPasswordChange)} className={classes.confirmForm}>
             <TextInput
               required
               label="Seu código de confirmação"
               placeholder="exemplo@mail.com"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...resetPasswordForm.getInputProps('code')}
-              className="resetPasswordPage__loginForm"
             />
 
             <PasswordInput
@@ -131,7 +134,7 @@ export const ResetPassword = () => {
               placeholder="*********"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...resetPasswordForm.getInputProps('password')}
-              className="resetPasswordPage__loginForm"
+              className={classes.confirmInput}
             />
 
             <PasswordInput
@@ -140,9 +143,9 @@ export const ResetPassword = () => {
               placeholder="*********"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...resetPasswordForm.getInputProps('validatePassword')}
-              className="resetPasswordPage__loginForm"
+              className={classes.confirmInput}
             />
-            <div className="resetPasswordPage__backToLogin">
+            <div>
               <Anchor
                 component={Link}
                 to="/login"
@@ -159,7 +162,7 @@ export const ResetPassword = () => {
           </form>
         </Box>
       </div>
-      <div className="resetPasswordPage__imageContainer">
+      <div className={classes.imageWrapper}>
         <img src={Fundo} alt="fundo" />
       </div>
     </div>
@@ -168,10 +171,10 @@ export const ResetPassword = () => {
   return (
     <div>
       {!codeSent
-        ? renderRequestCodeForm()
+        ?  renderRequestCodeForm()
         : !confirmed
-        ? renderConfirmationForm()
-        : <p>Done</p>}
+          ? renderConfirmationForm()
+          : <p>Done</p>}
     </div>
   );
 };

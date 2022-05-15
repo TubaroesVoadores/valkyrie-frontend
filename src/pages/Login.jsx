@@ -78,9 +78,8 @@ export const LoginPage = () => {
               placeholder="Digite sua senha"
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...loginForm.getInputProps('password')}
-              className="loginPage__passwordForm"
             />
-            <div className="loginPage__forgetPasswordText">
+            <div>
               <Anchor
                 component={Link}
                 to="/login/reset"
