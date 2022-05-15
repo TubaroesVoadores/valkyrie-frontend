@@ -9,6 +9,7 @@ import {
   Center,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { useModals } from '@mantine/modals';
 
 import { axiosClient } from '../lib';
 import { WithHeader, ProjectCard } from '../components';
@@ -16,6 +17,7 @@ import { useProjectsStyles } from '../styles';
 
 const Projects = () => {
   const theme = useMantineTheme();
+  const modals = useModals();
   const matches = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
   const { classes } = useProjectsStyles();
 
@@ -25,7 +27,12 @@ const Projects = () => {
     return response.data;
   });
 
-  const handleNewProject = () => {};
+  const handleNewProject = () => {
+    modals.openContextModal('NewProject', {
+      title: 'Criar novo projeto',
+      centered: true,
+    });
+  };
 
   return (
     <div className={classes.wrapper}>

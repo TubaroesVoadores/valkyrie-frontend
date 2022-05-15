@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClientProvider } from 'react-query';
 import { MantineProvider } from '@mantine/core';
-
+import { ModalsProvider } from '@mantine/modals';
 import { Amplify } from 'aws-amplify';
+
 import config from './config';
 import { App } from './App';
-import { mantineTheme, queryClient } from './lib';
+import { mantineTheme, queryClient, modals } from './lib';
 import { AppContextProvider } from './context/appContext';
 
 import './index.css';
@@ -40,7 +41,9 @@ ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <AppContextProvider>
         <MantineProvider theme={mantineTheme}>
-          <App />
+          <ModalsProvider modals={modals}>
+            <App />
+          </ModalsProvider>
         </MantineProvider>
       </AppContextProvider>
     </QueryClientProvider>
