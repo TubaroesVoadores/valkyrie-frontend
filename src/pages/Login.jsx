@@ -97,7 +97,7 @@ export const LoginPage = () => {
               withNewPassword && (
                 <PasswordInput
                   required
-                  label="Nova senha"
+                  label="Sua nova senha"
                   placeholder="Digite sua nova senha"
                   {...loginForm.getInputProps('newPassword')}
                 />

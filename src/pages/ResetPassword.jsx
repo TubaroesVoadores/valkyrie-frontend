@@ -23,7 +23,6 @@ const schema = (codeSent) => Yup.object().shape({
   ...(codeSent && {
     code: Yup.string().required('Código é obrigatório'),
     password: Yup.string().min(8, 'Senha deve ter no mínimo 8 caracteres').required('Senha é obrigatória'),
-    validatePassword: Yup.string().oneOf([Yup.ref('password'), null], 'Senhas não conferem').required('Confirmação de senha é obrigatória'),
   }),
 });
 
@@ -43,7 +42,6 @@ export const ResetPassword = () => {
       ...(codeSent && {
         code: '',
         password: '',
-        validatePassword: '',
       }),
     },
   });
@@ -81,7 +79,6 @@ export const ResetPassword = () => {
       resetPasswordForm.setErrors({
         code: 'Código inválido',
         password: 'Senha inválida',
-        validatePassword: 'Senha inválida',
       });
     }
   };
@@ -90,12 +87,12 @@ export const ResetPassword = () => {
     <div className={classes.wrapper}>
       <div className={classes.formWrapper}>
         <Box sx={{ width: 340 }} mx="auto">
-          <Title order={2} className={classes.forgotTitle}>Esqueceu a senha?</Title>
-          <Text size="md" className={classes.informationText}>
+          <Title order={2}>Esqueceu a senha?</Title>
+          <Text size="md" sx={{ marginBottom: '0.5rem' }}>
             Informe o seu e-mail e enviaremos
             um link para redefinir sua senha.
           </Text>
-          <form onSubmit={resetPasswordForm.onSubmit(handleResetPassword)}>
+          <form onSubmit={resetPasswordForm.onSubmit(handleResetPassword)} className={classes.form}>
             <TextInput
               required
               label="Seu e-mail"
@@ -113,8 +110,20 @@ export const ResetPassword = () => {
                 Voltar para o login
               </Anchor>
             </div>
-            <Center position="right" mt="md">
-              <Button size="lg" fullWidth type="submit" color="green" loading={sendingCode}>Enviar código</Button>
+            <Center
+              position="right"
+              mt="md"
+              sx={{ marginTop: '0.5rem', flexDirection: 'column', gap: '0.5rem' }}
+            >
+              <Button
+                size="lg"
+                fullWidth
+                type="submit"
+                color="green"
+                loading={sendingCode}
+              >
+                Enviar código
+              </Button>
             </Center>
           </form>
         </Box>
@@ -129,8 +138,8 @@ export const ResetPassword = () => {
     <div className={classes.wrapper}>
       <div className={classes.formWrapper}>
         <Box sx={{ width: 340 }} mx="auto">
-          <Title order={2} className={classes.resetTitle}>Redefinir a senha</Title>
-          <form onSubmit={resetPasswordForm.onSubmit(handleResetPasswordSubmit)} className={classes.confirmForm}>
+          <Title order={2}>Redefinir a senha</Title>
+          <form onSubmit={resetPasswordForm.onSubmit(handleResetPasswordSubmit)} className={classes.form}>
             <TextInput
               required
               label="Seu código de confirmação"
@@ -140,16 +149,9 @@ export const ResetPassword = () => {
             <PasswordInput
               required
               label="Sua nova senha"
-              placeholder="Digite sua senha"
+              placeholder="Digite sua nova senha"
               className={classes.confirmInput}
               {...resetPasswordForm.getInputProps('password')}
-            />
-            <PasswordInput
-              required
-              label="Confirme sua nova senha"
-              placeholder="Confirme sua senha"
-              className={classes.confirmInput}
-              {...resetPasswordForm.getInputProps('validatePassword')}
             />
             <div>
               <Anchor
@@ -162,8 +164,20 @@ export const ResetPassword = () => {
                 Voltar para o login
               </Anchor>
             </div>
-            <Center position="right" mt="md">
-              <Button size="lg" fullWidth type="submit" color="green" loading={submitting}>Enviar código</Button>
+            <Center
+              position="right"
+              mt="md"
+              sx={{ marginTop: '0.5rem', flexDirection: 'column', gap: '0.5rem' }}
+            >
+              <Button
+                size="lg"
+                fullWidth
+                type="submit"
+                color="green"
+                loading={submitting}
+              >
+                Enviar código
+              </Button>
             </Center>
           </form>
         </Box>

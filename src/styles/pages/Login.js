@@ -16,7 +16,7 @@ export const useLoginStyles = createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      display: 'felx',
+      display: 'flex',
       justifyContent: 'center',
       width: '100%',
     },
@@ -46,5 +46,4 @@ export const useLoginStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
-
 }));

@@ -5,36 +5,34 @@ export const useResetPasswordStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignContent: 'center',
-
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       alignContent: 'center',
       justifyContent: 'center',
     },
   },
-
   formWrapper: {
     width: '1000px',
     height: '100vh',
     display: 'flex',
     alignItems: 'center',
-
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
       display: 'flex',
       justifyContent: 'center',
       width: '100%',
     },
-
+    h2: {
+      marginBottom: '2rem',
+    },
     a: {
       display: 'flex',
       justifyContent: 'flex-end',
-      marginTop: '16px',
-    },
-
-    input: {
-      marginBottom: '16px',
     },
   },
-
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+  },
   imageWrapper: {
     background: theme.colors.green[1],
     width: '50%',
@@ -44,25 +42,8 @@ export const useResetPasswordStyles = createStyles((theme) => ({
     img: {
       height: '50%',
     },
-
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       display: 'none',
     },
-  },
-
-  forgotTitle: {
-    marginBottom: '32px',
-  },
-
-  informationText: {
-    marginBottom: '16px',
-  },
-
-  resetTitle: {
-    marginBottom: '12px',
-  },
-
-  confirmInput: {
-    marginBottom: '12px',
   },
 }));

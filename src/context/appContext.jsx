@@ -18,12 +18,14 @@ export const AppContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
+      const response = await Auth.currentAuthenticatedUser();
+
       const {
         attributes: {
           name: userName,
           email: userEmail,
         },
-      } = await Auth.currentAuthenticatedUser();
+      } = response;
 
       setCurrentUser({
         name: userName,
