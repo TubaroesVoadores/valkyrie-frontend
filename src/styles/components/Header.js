@@ -27,6 +27,12 @@ export const useHeaderStyles = createStyles((theme) => ({
       textDecoration: 'none',
     },
   },
+  actions: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '1rem',
+  },
   button: {
     color: theme.colors.gray[7],
     ':hover': {
