@@ -92,6 +92,15 @@ export const AppContextProvider = ({ children }) => {
     setLoading(false);
   };
 
+  const resetPassword = async ({ email }) => {
+    await Auth.forgotPassword(email);
+  };
+
+  const resetPasswordSubmit = async ({ email, code, password }, withSuccess) => {
+    await Auth.forgotPasswordSubmit(email, code, password);
+    withSuccess();
+  };
+
   useEffect(() => checkAuth(), []);
 
   return (
@@ -101,6 +110,8 @@ export const AppContextProvider = ({ children }) => {
         loading,
         logIn,
         logOut,
+        resetPassword,
+        resetPasswordSubmit,
       }}
     >
       {children}

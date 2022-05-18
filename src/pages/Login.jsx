@@ -132,7 +132,6 @@ export const LoginPage = () => {
                 fullWidth
                 color="green"
                 variant="subtle"
-                loading={isLoading}
                 onClick={() => setWithNewPassword((state) => !state)}
               >
                 { !withNewPassword ? 'Entrar com senha temporária' : 'Entrar com senha' }

@@ -5,6 +5,7 @@ export const useResetPasswordStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignContent: 'center',
+
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       alignContent: 'center',
       justifyContent: 'center',
@@ -18,7 +19,7 @@ export const useResetPasswordStyles = createStyles((theme) => ({
     alignItems: 'center',
 
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      display: 'felx',
+      display: 'flex',
       justifyContent: 'center',
       width: '100%',
     },
@@ -43,6 +44,7 @@ export const useResetPasswordStyles = createStyles((theme) => ({
     img: {
       height: '50%',
     },
+
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       display: 'none',
     },
