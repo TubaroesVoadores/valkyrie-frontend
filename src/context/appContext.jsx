@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
   useContext,
@@ -9,7 +10,6 @@ import { Auth } from 'aws-amplify';
 
 export const AppContext = createContext(null);
 
-// eslint-disable-next-line react/prop-types
 export const AppContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -37,35 +37,48 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const logIn = async ({ email, password }, withLogin, withNewPassword) => {
+  const logIn = async ({ email, password, newPassword = null }, redirectAfterLogin) => {
     setLoading(true);
 
     try {
       const response = await Auth.signIn(email, password);
 
       if (response.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        withNewPassword();
         setLoading(false);
-      }
+        if (!newPassword) throw new Error(response.challengeName);
 
-      const {
-        attributes: {
+        const newPasswordResponse = await Auth.completeNewPassword(response, newPassword);
+
+        const {
+          challengeParam: {
+            userAttributes: {
+              name: userName,
+              email: userEmail,
+            },
+          },
+        } = newPasswordResponse;
+
+        setCurrentUser({
           name: userName,
           email: userEmail,
-        },
-      } = response;
+        });
+      } else {
+        const {
+          attributes: {
+            name: userName,
+            email: userEmail,
+          },
+        } = response;
 
-      setCurrentUser({
-        name: userName,
-        email: userEmail,
-      });
+        setCurrentUser({
+          name: userName,
+          email: userEmail,
+        });
+      }
+
       setLoading(false);
 
-      withLogin();
+      redirectAfterLogin();
     } catch (error) {
       setCurrentUser(null);
       setLoading(false);
@@ -74,7 +87,7 @@ export const AppContextProvider = ({ children }) => {
   };
 
   const logOut = async () => {
-    await Auth.signOut();
+    await Auth.signOut({ global: true });
     setCurrentUser(null);
     setLoading(false);
   };
@@ -88,12 +101,13 @@ export const AppContextProvider = ({ children }) => {
     withSuccess();
   };
 
+  useEffect(() => checkAuth(), []);
+
   return (
     <AppContext.Provider
       value={{
         currentUser,
         loading,
-        checkAuth,
         logIn,
         logOut,
         resetPassword,

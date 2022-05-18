@@ -17,9 +17,12 @@ import { useAppContext } from '../context/appContext';
 import { useLoginStyles } from '../styles';
 import Fundo from '../assets/fundo.svg';
 
-const schema = Yup.object().shape({
+const schema = (withNewPassword) => Yup.object().shape({
   email: Yup.string().email('E-mail inválido').required('E-mail é obrigatório'),
   password: Yup.string().min(8, 'Senha deve ter no mínimo 8 caracteres').required('Senha é obrigatória'),
+  ...(withNewPassword && {
+    newPassword: Yup.string().min(8, 'Senha deve ter no mínimo 8 caracteres').required('Senha é obrigatória'),
+  }),
 });
 
 export const LoginPage = () => {
@@ -28,39 +31,54 @@ export const LoginPage = () => {
   const { classes } = useLoginStyles();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [withNewPassword, setWithNewPassword] = useState(false);
 
   const loginForm = useForm({
-    schema: yupResolver(schema),
+    schema: yupResolver(schema(withNewPassword)),
     initialValues: {
       email: '',
       password: '',
+      ...(withNewPassword && {
+        newPassword: '',
+      }),
     },
   });
 
   const handleLogIn = async () => {
     setIsLoading(true);
 
-    const { email, password } = loginForm.values;
+    const { email, password, newPassword } = loginForm.values;
 
     try {
-      await logIn(
-        { email, password },
-        () => navigate('/projects'),
-        () => navigate('/login/new-password-required'),
-      );
+      await logIn({
+        email,
+        password,
+        newPassword,
+      }, () => navigate('/projects'));
     } catch (error) {
       setIsLoading(false);
-      loginForm.setErrors({
-        email: 'E-mail ou senha inválidos',
-        password: 'E-mail ou senha inválidos',
-      });
+
+      if (error.message === 'NEW_PASSWORD_REQUIRED') {
+        setWithNewPassword(true);
+        loginForm.setErrors({
+          newPassword: 'Precisa de uma nova senha',
+        });
+      } else {
+        loginForm.setErrors({
+          email: 'E-mail ou senha inválidos',
+          password: 'E-mail ou senha inválidos',
+          ...(withNewPassword && {
+            newPassword: 'E-mail ou senha inválidos',
+          }),
+        });
+      }
     }
   };
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.formWrapper}>
-        <Box sx={{ maxWidth: 300 }} mx="auto">
+        <Box sx={{ width: 340 }} mx="auto">
           <Title order={2}>Bem-vindo à Valkyrie.</Title>
           <form onSubmit={loginForm.onSubmit(handleLogIn)} className={classes.form}>
             <TextInput
@@ -71,10 +89,20 @@ export const LoginPage = () => {
             />
             <PasswordInput
               required
-              label="Sua senha"
-              placeholder="Digite sua senha"
+              label={!withNewPassword ? 'Sua senha' : 'Sua senha temporária'}
+              placeholder={!withNewPassword ? 'Digite sua senha' : 'Digite sua senha temporária'}
               {...loginForm.getInputProps('password')}
             />
+            {
+              withNewPassword && (
+                <PasswordInput
+                  required
+                  label="Nova senha"
+                  placeholder="Digite sua nova senha"
+                  {...loginForm.getInputProps('newPassword')}
+                />
+              )
+            }
             <div>
               <Anchor
                 component={Link}
@@ -89,17 +117,24 @@ export const LoginPage = () => {
             <Center
               position="right"
               mt="md"
-              fullWidth
-              sx={{ marginTop: '0.5rem' }}
+              sx={{ marginTop: '0.5rem', flexDirection: 'column', gap: '0.5rem' }}
             >
               <Button
-                size="lg"
                 fullWidth
+                size="lg"
                 type="submit"
-                loading={isLoading}
                 color="green"
+                loading={isLoading}
               >
                 Entrar
+              </Button>
+              <Button
+                fullWidth
+                color="green"
+                variant="subtle"
+                onClick={() => setWithNewPassword((state) => !state)}
+              >
+                { !withNewPassword ? 'Entrar com senha temporária' : 'Entrar com senha' }
               </Button>
             </Center>
           </form>
