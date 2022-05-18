@@ -79,6 +79,16 @@ export const AppContextProvider = ({ children }) => {
     setLoading(false);
   };
 
+  const resetPassword = async ({ email }) => {
+    const response = await Auth.forgotPassword(email);
+    console.log(response);
+  };
+
+  const resetPasswordSubmit = async ({ email, code, password }) => {
+    const response = await Auth.forgotPasswordSubmit(email, code, password);
+    console.log(response);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -87,6 +97,8 @@ export const AppContextProvider = ({ children }) => {
         checkAuth,
         logIn,
         logOut,
+        resetPassword,
+        resetPasswordSubmit,
       }}
     >
       {children}
