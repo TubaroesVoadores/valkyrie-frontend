@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
   Text,
@@ -28,8 +28,9 @@ const schema = (codeSent) => Yup.object().shape({
 });
 
 export const ResetPassword = () => {
-  const { resetPassword, resetPasswordSubmit } = useAppContext();
+  const navigate = useNavigate();
   const { classes } = useResetPasswordStyles();
+  const { resetPassword, resetPasswordSubmit } = useAppContext();
 
   const [codeSent, setCodeSent] = useState(false);
   const [sendingCode, setSendingCode] = useState(false);
@@ -70,7 +71,10 @@ export const ResetPassword = () => {
     const { email, code, password } = resetPasswordForm.values;
 
     try {
-      await resetPasswordSubmit({ email, code, password });
+      await resetPasswordSubmit(
+        { email, code, password },
+        () => navigate('/login'),
+      );
       setSubmitting(false);
     } catch (error) {
       setSubmitting(false);
@@ -130,7 +134,7 @@ export const ResetPassword = () => {
             <TextInput
               required
               label="Seu código de confirmação"
-              placeholder="exemplo@mail.com"
+              placeholder="000000"
               {...resetPasswordForm.getInputProps('code')}
             />
             <PasswordInput

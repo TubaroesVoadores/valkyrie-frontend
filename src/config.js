@@ -9,8 +9,8 @@ export default {
   },
   cognito: {
     REGION: 'us-east-1',
-    USER_POOL_ID: 'us-east-1_LmlFDaQ2f',
-    APP_CLIENT_ID: '54ibpv1bbmma32au76ndgiuack',
-    IDENTITY_POOL_ID: 'us-east-1:764a407e-d483-4260-9d11-e04333ec1bb1',
+    USER_POOL_ID: 'us-east-1_viDR20etW',
+    APP_CLIENT_ID: '22098e50iqsjc648lqmdd6i6ch',
+    IDENTITY_POOL_ID: 'us-east-1:227eca34-6704-428b-8d92-4c1bafc364b2',
   },
 };

@@ -80,13 +80,12 @@ export const AppContextProvider = ({ children }) => {
   };
 
   const resetPassword = async ({ email }) => {
-    const response = await Auth.forgotPassword(email);
-    console.log(response);
+    await Auth.forgotPassword(email);
   };
 
-  const resetPasswordSubmit = async ({ email, code, password }) => {
-    const response = await Auth.forgotPasswordSubmit(email, code, password);
-    console.log(response);
+  const resetPasswordSubmit = async ({ email, code, password }, withSuccess) => {
+    await Auth.forgotPasswordSubmit(email, code, password);
+    withSuccess();
   };
 
   return (
