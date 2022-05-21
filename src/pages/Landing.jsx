@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { API } from 'aws-amplify';
 
 import {
@@ -16,7 +16,6 @@ import {
   Text,
   Button,
   Textarea,
-  Center,
   Image,
 } from '@mantine/core';
 
@@ -33,6 +32,11 @@ const formSchema = Yup.object().shape({
 
 export const LandingPage = () => {
   const { classes } = useLandingStyles();
+  const navigate = useNavigate();
+  const viewport = useRef();
+
+  const executeScroll = () => viewport.current.scrollIntoView({ behavior: 'smooth' });
+
   const [isLoading, setIsLoading] = useState(false);
 
   const landingForm = useForm({
@@ -66,64 +70,71 @@ export const LandingPage = () => {
   return (
     <>
       <div className={classes.contentWrapper}>
-        <div className={classes.textWrapper}>
-          <Title>valkyrie</Title>
-          <div style={{ width: 470, marginTop: 18 }}>
-            <Text align="center" component="span" size="md">
-              Solução inteligente para latifúndios com o
-              objetivo de sensoriar a presente área de vegetação
-              nativa na Amazônia.
-            </Text>
-            <div style={{ width: 106, marginTop: 18 }}>
-              <Button
-                size="md"
-                type="submit"
-                color="green"
-              >
-                Saiba Mais
-              </Button>
-            </div>
-            <div>
-              <form onSubmit={landingForm.onSubmit(sendEmail)}>
-                <Paper withBorder shadow="md" p={30} mt={100} radius="md">
-                  <TextInput
-                    label="Nome"
-                    placeholder="Seu nome"
-                    required
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...landingForm.getInputProps('name')}
-                  />
-                  <TextInput
-                    label="Email"
-                    placeholder="email@exemplo.com"
-                    required
-                    mt="md"
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...landingForm.getInputProps('email')}
-                  />
-                  <Textarea
-                    placeholder="Digite aqui sua mensagem"
-                    label="Sua mensagem"
-                    required
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    {...landingForm.getInputProps('description')}
-                  />
-                  <Button fullWidth mt="xl" type="submit" loading={isLoading}>
-                    {isLoading ? 'Enviando email' : 'Enviar email'}
-                  </Button>
-                </Paper>
-              </form>
-            </div>
+        <div style={classes.textWrapper}>
+          <Title style={{ fontSize: 70 }}>valkyrie</Title>
+          <Text align="center" component="p" size="md" style={{ width: 400, textAlign: 'justify' }}>
+            Solução inteligente para latifúndios com o
+            objetivo de sensoriar a presente área de vegetação
+            nativa na Amazônia.
+          </Text>
+          <div style={{ width: 106, marginTop: 18, display: 'flex' }}>
+            <Button
+              onClick={() => navigate('/login')}
+              size="md"
+              type="submit"
+              color="green"
+              style={{ marginRight: 10 }}
+            >
+              Acessar a plataforma
+            </Button>
+            <Button
+              size="md"
+              type="submit"
+              color="green"
+              onClick={executeScroll}
+            >
+              Entre em contato
+            </Button>
           </div>
         </div>
-        <div style={{ width: '70%', paddingBottom: 100 }}>
+        <div className={classes.imageWrapper}>
           <Image
             src={Landing}
             alt="fundo"
           />
         </div>
       </div>
-      {/* style={{ width: '30%', marginTop: -350, marginLeft: '10%' }} */}
+      <div className={classes.formWrapper} ref={viewport}>
+        <form onSubmit={landingForm.onSubmit(sendEmail)} className={classes.form}>
+          <Paper withBorder shadow="md" p={30} mt={200} radius="md">
+            <TextInput
+              label="Nome"
+              placeholder="Seu nome"
+              required
+            // eslint-disable-next-line react/jsx-props-no-spreading
+              {...landingForm.getInputProps('name')}
+            />
+            <TextInput
+              label="Email"
+              placeholder="email@exemplo.com"
+              required
+              mt="md"
+            // eslint-disable-next-line react/jsx-props-no-spreading
+              {...landingForm.getInputProps('email')}
+            />
+            <Textarea
+              placeholder="Digite aqui sua mensagem"
+              label="Sua mensagem"
+              required
+            // eslint-disable-next-line react/jsx-props-no-spreading
+              {...landingForm.getInputProps('description')}
+            />
+            <Button mt="md" type="submit" loading={isLoading}>
+              {isLoading ? 'Enviando email' : 'Enviar email'}
+            </Button>
+          </Paper>
+        </form>
+      </div>
     </>
   );
 };

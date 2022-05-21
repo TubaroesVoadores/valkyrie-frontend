@@ -8,23 +8,35 @@ export const useLandingStyles = createStyles((theme) => ({
     alignContent: 'center',
     margin: '17rem 12.5rem',
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      width: '100vw',
+      height: '100vh',
       alignContent: 'center',
       justifyContent: 'center',
     },
   },
-  textWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'center',
-    width: '100%',
-    height: '100%',
-  },
 
   imageWrapper: {
-    height: '10px',
-    marginRight: '200px',
+    width: '40%',
+    marginRight: '100px',
+    marginTop: '-90px',
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       display: 'none',
+    },
+  },
+
+  formWrapper: {
+    width: '100%',
+    height: '700px',
+    display: 'flex',
+    justifyContent: 'center',
+    background: theme.colors.green[1],
+  },
+
+  form: {
+    width: '50%',
+
+    label: {
+      fontSize: '15px',
     },
   },
 }));
