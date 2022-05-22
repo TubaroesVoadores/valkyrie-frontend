@@ -29,9 +29,5 @@ export const useProjectInfosStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
-    alignItems: 'flex-end',
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      alignItems: 'normal',
-    },
   },
 }));

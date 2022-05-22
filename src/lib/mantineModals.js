@@ -1,5 +1,6 @@
-import { NewProject } from '../components';
+import { NewProject, ProjectImages } from '../components';
 
 export const modals = {
   NewProject,
+  ProjectImages,
 };
