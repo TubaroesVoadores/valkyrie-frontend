@@ -43,9 +43,9 @@ export const ProjectImages = ({ innerProps: { image } }) => {
         {(styles) => (
           <Overlay
             style={styles}
-            gradient="linear-gradient(0deg, black 72%, transparent 100%)"
+            gradient="linear-gradient(0deg, rgba(0,0,0,0.7) 70%, transparent 100%)"
             zIndex={5}
-            sx={{ height: '45%', top: 'unset' }}
+            sx={{ height: '37%', top: 'unset' }}
             onMouseLeave={() => setOverlayVisibility(false)}
             onMouseEnter={() => setOverlayVisibility(true)}
             radius="sm"
