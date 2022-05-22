@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
+import { API } from 'aws-amplify';
 import {
   Button, Textarea, Text, TextInput,
 } from '@mantine/core';
@@ -20,27 +21,35 @@ export const NewProject = () => {
   const newProjectForm = useForm({
     schema: yupResolver(schema),
     initialValues: {
-      name: '',
+      nameProject: '',
       description: '',
     },
   });
 
   const handleNewProject = async () => {
+    const { nameProject, description } = newProjectForm.values;
     setIsLoading(true);
+
+    await API.post('projects', '/projects/emailForms', {
+      body: {
+        nameProject,
+        description,
+      },
+    });
+
+    newProjectForm.reset();
+    setIsLoading(false);
   };
 
   return (
     <div className={classes.wrapper}>
       <Text>Envie aqui sua mensagem</Text>
-      <form
-        onSubmit={newProjectForm.onSubmit(handleNewProject)}
-        className={classes.form}
-      >
+      <form className={classes.form}>
         <TextInput
           required
           label="Nome"
           placeholder="Nome do projeto"
-          {...newProjectForm.getInputProps('name')}
+          {...newProjectForm.getInputProps('nameProject')}
         />
         <Textarea
           required
@@ -54,6 +63,7 @@ export const NewProject = () => {
         <Button
           fullWidth
           size="lg"
+          onClick={handleNewProject}
           type="submit"
           color="green"
           loading={isLoading}

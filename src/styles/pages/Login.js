@@ -33,6 +33,7 @@ export const useLoginStyles = createStyles((theme) => ({
     flexDirection: 'column',
     gap: '1rem',
   },
+
   imageWrapper: {
     background: theme.colors.green[1],
     width: '50%',
