@@ -1,10 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import {
-  Button,
-  Textarea,
-  Text,
-  TextInput,
+  Button, Textarea, Text, TextInput,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
@@ -34,10 +31,11 @@ export const NewProject = () => {
 
   return (
     <div className={classes.wrapper}>
-      <Text>
-        Envie aqui sua mensagem
-      </Text>
-      <form onSubmit={newProjectForm.onSubmit(handleNewProject)} className={classes.form}>
+      <Text>Envie aqui sua mensagem</Text>
+      <form
+        onSubmit={newProjectForm.onSubmit(handleNewProject)}
+        className={classes.form}
+      >
         <TextInput
           required
           label="Nome"

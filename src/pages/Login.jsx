@@ -50,11 +50,7 @@ export const LoginPage = () => {
     const { email, password, newPassword } = loginForm.values;
 
     try {
-      await logIn({
-        email,
-        password,
-        newPassword,
-      }, () => navigate('/projects'));
+      await logIn({ email, password, newPassword }, () => navigate('/projects'));
     } catch (error) {
       setIsLoading(false);
 
@@ -80,7 +76,10 @@ export const LoginPage = () => {
       <div className={classes.formWrapper}>
         <Box sx={{ width: 340 }} mx="auto">
           <Title order={2}>Bem-vindo à Valkyrie.</Title>
-          <form onSubmit={loginForm.onSubmit(handleLogIn)} className={classes.form}>
+          <form
+            onSubmit={loginForm.onSubmit(handleLogIn)}
+            className={classes.form}
+          >
             <TextInput
               required
               label="Seu e-mail"
@@ -117,7 +116,11 @@ export const LoginPage = () => {
             <Center
               position="right"
               mt="md"
-              sx={{ marginTop: '0.5rem', flexDirection: 'column', gap: '0.5rem' }}
+              sx={{
+                marginTop: '0.5rem',
+                flexDirection: 'column',
+                gap: '0.5rem',
+              }}
             >
               <Button
                 fullWidth
@@ -134,7 +137,7 @@ export const LoginPage = () => {
                 variant="subtle"
                 onClick={() => setWithNewPassword((state) => !state)}
               >
-                { !withNewPassword ? 'Entrar com senha temporária' : 'Entrar com senha' }
+                {!withNewPassword ? 'Entrar com senha temporária' : 'Entrar com senha'}
               </Button>
             </Center>
           </form>

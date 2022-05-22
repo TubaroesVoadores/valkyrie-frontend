@@ -2,10 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {
-  SimpleGrid,
-  useMantineTheme,
-} from '@mantine/core';
+import { SimpleGrid, useMantineTheme } from '@mantine/core';
 
 import { ProjectCard } from './ProjectCard';
 

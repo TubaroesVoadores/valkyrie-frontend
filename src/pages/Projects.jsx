@@ -2,11 +2,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import {
-  Title,
-  Button,
-  useMantineTheme,
-  Loader,
-  Center,
+  Title, Button, useMantineTheme, Loader, Center,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useModals } from '@mantine/modals';
@@ -49,14 +45,14 @@ const Projects = () => {
       </div>
       <div className={classes.projectsList}>
         {
-          (status === 'loading') && (
+          status === 'loading' && (
             <Center sx={{ marginTop: '1rem' }}>
               <Loader />
             </Center>
           )
         }
         {
-          (status === 'success' && projects.length > 0) && (
+          status === 'success' && projects.length > 0 && (
             <ProjectsList projects={projects} />
           )
         }

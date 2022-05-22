@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 import { LogOut } from 'react-feather';
 
 import {
-  Button,
-  Anchor,
-  Title,
-  Text,
+  Button, Anchor, Title, Text,
 } from '@mantine/core';
 
 import { useAppContext } from '../context/appContext';
@@ -22,19 +19,11 @@ export const Header = () => {
 
   return (
     <div className={classes.wrapper}>
-      <Anchor
-        className={classes.anchor}
-        component={Link}
-        to="/projects"
-      >
-        <Title order={2}>
-          valkyrie
-        </Title>
+      <Anchor className={classes.anchor} component={Link} to="/projects">
+        <Title order={2}>valkyrie</Title>
       </Anchor>
       <div className={classes.actions}>
-        <Text size="sm">
-          {currentUser.name}
-        </Text>
+        <Text size="sm">{currentUser.name}</Text>
         <Button
           className={classes.button}
           variant="subtle"
