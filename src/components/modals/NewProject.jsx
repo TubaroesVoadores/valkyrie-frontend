@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
+import { API } from 'aws-amplify';
 import {
   Button,
   Textarea,
@@ -23,13 +24,27 @@ export const NewProject = () => {
   const newProjectForm = useForm({
     schema: yupResolver(schema),
     initialValues: {
-      name: '',
+      nameProject: '',
       description: '',
     },
   });
 
   const handleNewProject = async () => {
+    const { nameProject, description } = newProjectForm.values;
     setIsLoading(true);
+
+    try {
+      await API.post('project', 'emailForms', {
+        body: {
+          nameProject,
+          description,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    newProjectForm.reset();
+    setIsLoading(false);
   };
 
   return (
@@ -42,7 +57,7 @@ export const NewProject = () => {
           required
           label="Nome"
           placeholder="Nome do projeto"
-          {...newProjectForm.getInputProps('name')}
+          {...newProjectForm.getInputProps('nameProject')}
         />
         <Textarea
           required
