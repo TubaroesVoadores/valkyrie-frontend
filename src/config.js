@@ -6,7 +6,6 @@ export default {
   apiGateway: {
     REGION: 'us-east-1',
     URL: 'https://rlgh54vqjj.execute-api.us-east-1.amazonaws.com/dev/projects/',
-    // URL: 'https://pirowni589.execute-api.us-east-1.amazonaws.com/dev/projects/',
   },
   cognito: {
     REGION: 'us-east-1',
