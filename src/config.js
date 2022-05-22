@@ -1,11 +1,11 @@
 export default {
   s3: {
     REGION: 'us-east-1',
-    BUCKET: 'valkfly-backend-dev-serverlessdeploymentbucket-147sj8fyj9he',
+    BUCKET: 'valkyrie-backend-dev-serverlessdeploymentbucket-1v9k902wedpgp',
   },
   apiGateway: {
     REGION: 'us-east-1',
-    URL: 'https://pirowni589.execute-api.us-east-1.amazonaws.com/dev/projects/',
+    URL: 'https://rlgh54vqjj.execute-api.us-east-1.amazonaws.com/dev',
   },
   cognito: {
     REGION: 'us-east-1',
