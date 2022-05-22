@@ -1,76 +1,20 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-no-useless-fragment */
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import {
   Image,
   Paper,
   Text,
   Title,
-  Button,
+  useMantineTheme,
+  SimpleGrid,
 } from '@mantine/core';
+import { useModals } from '@mantine/modals';
 
-import { useProjectInfosStyles, useProjectImageStyles } from '../styles';
-
-const ProjectImage = ({ image }) => {
-  const { classes } = useProjectImageStyles();
-  const [isOriginalImage, setIsOriginalImage] = useState(false);
-
-  const {
-    s3link: originalImage,
-    filteredImageLink: filteredImage,
-    data,
-  } = image;
-
-  const {
-    area,
-    lat,
-    log,
-    nativeForest,
-  } = useMemo(() => {
-    const roundedArea = Math.floor(data.area * 100) / 100;
-    const roundedNativeForest = Math.floor(data.nativeForest * 100);
-
-    return {
-      ...data,
-      area: roundedArea,
-      nativeForest: roundedNativeForest,
-    };
-  }, [data]);
-
-  return (
-    <Paper
-      shadow="xs"
-      radius="xs"
-      p="md"
-      withBorder
-      className={classes.wrapper}
-    >
-      <Image
-        src={isOriginalImage ? originalImage : filteredImage}
-        withPlaceholder
-      />
-      <div className={classes.detailsWrapper}>
-        <Title order={4}>Detalhes da imagem</Title>
-        <div className={classes.infos}>
-          <Text>{`Latitude: ${lat}`}</Text>
-          <Text>{`Longitude: ${log}`}</Text>
-          <Text>{`Area da propriedade: ${area} km²`}</Text>
-          <Text>{`Floresta nativa: ${nativeForest}%`}</Text>
-        </div>
-        <Button
-          color="green"
-          size="md"
-          onClick={() => setIsOriginalImage(!isOriginalImage)}
-          sx={{ marginTop: '0.5rem' }}
-        >
-          {isOriginalImage ? 'Ver imagem filtrada' : 'Ver imagem original'}
-        </Button>
-      </div>
-    </Paper>
-  );
-};
+import { useProjectInfosStyles } from '../styles';
 
 export const ProjectInfos = ({ project }) => {
+  const theme = useMantineTheme();
+  const modals = useModals();
   const { classes } = useProjectInfosStyles();
 
   const {
@@ -94,6 +38,17 @@ export const ProjectInfos = ({ project }) => {
     };
   }, [project]);
 
+  const handleOpenImage = (image) => {
+    modals.openContextModal('ProjectImages', {
+      title: 'Detalhes da imagem',
+      centered: true,
+      size: 'xl',
+      innerProps: {
+        image,
+      },
+    });
+  };
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.detailsWrapper}>
@@ -114,11 +69,27 @@ export const ProjectInfos = ({ project }) => {
         </Paper>
       </div>
       <div className={classes.imagesWrapper}>
-        {
-          images.map((image) => (
-            <ProjectImage key={image.id} image={image} />
-          ))
-        }
+        <Title order={2}>Imagens</Title>
+        <SimpleGrid
+          cols={2}
+          spacing="lg"
+          breakpoints={[
+            { maxWidth: theme.breakpoints.xl, cols: 1 },
+          ]}
+          className={classes.imagesGrid}
+        >
+          {
+            images.map((image) => (
+              <Image
+                key={image.id}
+                src={image.s3link}
+                radius="xs"
+                withPlaceholder
+                onClick={() => handleOpenImage(image)}
+              />
+            ))
+          }
+        </SimpleGrid>
       </div>
     </div>
   );
