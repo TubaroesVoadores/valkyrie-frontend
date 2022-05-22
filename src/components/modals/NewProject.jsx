@@ -30,11 +30,12 @@ export const NewProject = () => {
   });
 
   const handleNewProject = async () => {
+    console.log('RODOU EMAIL');
     const { nameProject, description } = newProjectForm.values;
     setIsLoading(true);
 
     try {
-      await API.post('project', 'emailForms', {
+      await API.post('projects', '/projects/emailForms', {
         body: {
           nameProject,
           description,
@@ -52,7 +53,7 @@ export const NewProject = () => {
       <Text>
         Envie aqui sua mensagem
       </Text>
-      <form onSubmit={newProjectForm.onSubmit(handleNewProject)} className={classes.form}>
+      <form className={classes.form}>
         <TextInput
           required
           label="Nome"
@@ -71,6 +72,7 @@ export const NewProject = () => {
         <Button
           fullWidth
           size="lg"
+          onClick={handleNewProject}
           type="submit"
           color="green"
           loading={isLoading}
