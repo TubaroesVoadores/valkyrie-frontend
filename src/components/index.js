@@ -4,3 +4,5 @@ export { WithHeader } from './WithHeader';
 export { ProjectCard } from './ProjectCard';
 export { RedirectRoute } from './RedirectRoute';
 export { NewProject } from './modals/NewProject';
+export { ProjectsList } from './ProjectsList';
+export { ProjectInfos } from './ProjectInfos';

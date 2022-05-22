@@ -11,7 +11,7 @@ export const useResetPasswordStyles = createStyles((theme) => ({
     },
   },
   formWrapper: {
-    width: '1000px',
+    width: '50vw',
     height: '100vh',
     display: 'flex',
     alignItems: 'center',

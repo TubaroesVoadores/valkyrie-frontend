@@ -13,7 +13,7 @@ import { useNewProjectStyles } from '../../styles';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
-  message: Yup.string().required('Mensagem é obrigatória'),
+  description: Yup.string().required('Mensagem é obrigatória'),
 });
 
 export const NewProject = () => {
@@ -24,7 +24,7 @@ export const NewProject = () => {
     schema: yupResolver(schema),
     initialValues: {
       name: '',
-      message: '',
+      description: '',
     },
   });
 
@@ -47,11 +47,11 @@ export const NewProject = () => {
         <Textarea
           required
           autosize
-          label="Mensagem"
-          placeholder="Digite sua mensagem"
+          label="Descrição"
+          placeholder="Digite a descrição do projeto"
           minRows={2}
           maxRows={5}
-          {...newProjectForm.getInputProps('message')}
+          {...newProjectForm.getInputProps('description')}
         />
         <Button
           fullWidth

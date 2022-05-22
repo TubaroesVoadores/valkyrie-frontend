@@ -1,59 +1,66 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import {
   Title,
-  Button,
-  useMantineTheme,
+  Anchor,
+  Loader,
+  Center,
+  Badge,
 } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
+import { API } from 'aws-amplify';
 
-import { axiosClient } from '../lib';
-import { WithHeader } from '../components';
+import { ProjectInfos, WithHeader } from '../components';
 import { useProjectStyles } from '../styles';
 
 const Project = () => {
-  const theme = useMantineTheme();
-  const matches = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
   const { projectId } = useParams();
   const { classes } = useProjectStyles();
 
   const { data: project, status } = useQuery('project', async () => {
-    const response = await axiosClient.get(`projects/${projectId}`);
+    const response = await API.get('projects', `/projects/${projectId}`);
 
-    return response.data;
+    return response.project;
   });
-
-  const handleDownloadPDF = () => {};
 
   return (
     <div className={classes.wrapper}>
       <div className={classes.heading}>
-        <Title>
-          Projeto {projectId}
-        </Title>
-        <Button
-          variant="filled"
-          color="white"
-          onClick={handleDownloadPDF}
-          size={matches ? 'md' : 'sm'}
-        >
-          Baixar PDF
-        </Button>
+        <div className={classes.breadcrumbs}>
+          <Anchor
+            component={Link}
+            to="/projects"
+            size="lg"
+            color="green"
+          >
+            Projects
+          </Anchor>
+          <Title>
+            {
+              project ? project.name : 'Project'
+            }
+          </Title>
+          {
+            project && (
+              <Badge color="green" radius="sm" size="md" variant="filled">
+                {project.status}
+              </Badge>
+            )
+          }
+        </div>
       </div>
       <div className={classes.projectInfos}>
         {
-          (status !== 'loading') && (
-            <div>
-              {
-                Object.keys(project).map((key) => (
-                  <div key={key}>
-                    <span>{`${key}: ${project[key]}`}</span>
-                  </div>
-                ))
-              }
-            </div>
+          (status === 'loading') && (
+            <Center sx={{ marginTop: '1rem' }}>
+              <Loader />
+            </Center>
+          )
+        }
+        {
+          (status === 'success' && project) && (
+            <ProjectInfos project={project} />
           )
         }
       </div>

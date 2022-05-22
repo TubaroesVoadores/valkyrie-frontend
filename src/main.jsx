@@ -28,7 +28,7 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: 'project',
+        name: 'projects',
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
