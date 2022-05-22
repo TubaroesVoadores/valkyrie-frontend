@@ -53,7 +53,7 @@ export const LandingPage = () => {
     setIsLoading(true);
 
     try {
-      await API.post('project', 'landingEmail', {
+      await API.post('projects', '/projects/landingEmail', {
         body: {
           name,
           email,
