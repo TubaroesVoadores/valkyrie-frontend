@@ -1,10 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  useContext,
-  createContext,
-  useState,
-  useEffect,
+  useContext, createContext, useState, useEffect,
 } from 'react';
 import { Auth } from 'aws-amplify';
 
@@ -21,10 +18,7 @@ export const AppContextProvider = ({ children }) => {
       const response = await Auth.currentAuthenticatedUser();
 
       const {
-        attributes: {
-          name: userName,
-          email: userEmail,
-        },
+        attributes: { name: userName, email: userEmail },
       } = response;
 
       setCurrentUser({
@@ -49,14 +43,14 @@ export const AppContextProvider = ({ children }) => {
         setLoading(false);
         if (!newPassword) throw new Error(response.challengeName);
 
-        const newPasswordResponse = await Auth.completeNewPassword(response, newPassword);
+        const newPasswordResponse = await Auth.completeNewPassword(
+          response,
+          newPassword,
+        );
 
         const {
           challengeParam: {
-            userAttributes: {
-              name: userName,
-              email: userEmail,
-            },
+            userAttributes: { name: userName, email: userEmail },
           },
         } = newPasswordResponse;
 
@@ -66,10 +60,7 @@ export const AppContextProvider = ({ children }) => {
         });
       } else {
         const {
-          attributes: {
-            name: userName,
-            email: userEmail,
-          },
+          attributes: { name: userName, email: userEmail },
         } = response;
 
         setCurrentUser({

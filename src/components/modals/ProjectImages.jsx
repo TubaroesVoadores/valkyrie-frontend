@@ -1,11 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useMemo, useState } from 'react';
 import {
-  Button,
-  Image,
-  Overlay,
-  Text,
-  Transition,
+  Button, Image, Overlay, Text, Transition,
 } from '@mantine/core';
 
 import { useProjectImagesStyles } from '../../styles';
@@ -22,10 +18,7 @@ export const ProjectImages = ({ innerProps: { image } }) => {
   } = image;
 
   const {
-    area,
-    lat,
-    log,
-    nativeForest,
+    area, lat, log, nativeForest,
   } = useMemo(() => {
     const roundedArea = Math.floor(data.area * 100) / 100;
     const roundedNativeForest = Math.floor(data.nativeForest * 100);
@@ -39,13 +32,18 @@ export const ProjectImages = ({ innerProps: { image } }) => {
 
   return (
     <div className={classes.wrapper}>
-      <Transition mounted={isOverlayVisible} transition="fade" duration={500} timingFunction="ease">
+      <Transition
+        mounted={isOverlayVisible}
+        transition="fade"
+        duration={500}
+        timingFunction="ease"
+      >
         {(styles) => (
           <Overlay
             style={styles}
-            gradient="linear-gradient(0deg, black 72%, transparent 100%)"
+            gradient="linear-gradient(0deg, rgba(0,0,0,0.7) 70%, transparent 100%)"
             zIndex={5}
-            sx={{ height: '45%', top: 'unset' }}
+            sx={{ height: '37%', top: 'unset' }}
             onMouseLeave={() => setOverlayVisibility(false)}
             onMouseEnter={() => setOverlayVisibility(true)}
             radius="sm"
@@ -59,7 +57,7 @@ export const ProjectImages = ({ innerProps: { image } }) => {
               className={classes.button}
               onClick={() => setIsOriginalOpen(!isOriginalOpen)}
             >
-              {isOriginalOpen ? 'Ver imagem filtrada' : 'Ver imagem original'}
+              {!isOriginalOpen ? 'Ver imagem filtrada' : 'Ver imagem original'}
             </Button>
           </Overlay>
         )}

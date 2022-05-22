@@ -2,10 +2,7 @@
 import React, { useState } from 'react';
 import { API } from 'aws-amplify';
 import {
-  Button,
-  Textarea,
-  Text,
-  TextInput,
+  Button, Textarea, Text, TextInput,
 } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
@@ -30,29 +27,23 @@ export const NewProject = () => {
   });
 
   const handleNewProject = async () => {
-    console.log('RODOU EMAIL');
     const { nameProject, description } = newProjectForm.values;
     setIsLoading(true);
 
-    try {
-      await API.post('projects', '/projects/emailForms', {
-        body: {
-          nameProject,
-          description,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await API.post('projects', '/projects/emailForms', {
+      body: {
+        nameProject,
+        description,
+      },
+    });
+
     newProjectForm.reset();
     setIsLoading(false);
   };
 
   return (
     <div className={classes.wrapper}>
-      <Text>
-        Envie aqui sua mensagem
-      </Text>
+      <Text>Envie aqui sua mensagem</Text>
       <form className={classes.form}>
         <TextInput
           required

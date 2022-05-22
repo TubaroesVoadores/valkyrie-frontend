@@ -8,10 +8,7 @@ import { useProjectCardStyles } from '../styles';
 
 export const ProjectCard = (props) => {
   const {
-    id,
-    name,
-    city,
-    status,
+    id, name, city, status,
   } = props;
 
   const navigate = useNavigate();

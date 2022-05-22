@@ -69,10 +69,7 @@ export const ResetPassword = () => {
     const { email, code, password } = resetPasswordForm.values;
 
     try {
-      await resetPasswordSubmit(
-        { email, code, password },
-        () => navigate('/login'),
-      );
+      await resetPasswordSubmit({ email, code, password }, () => navigate('/login'));
       setSubmitting(false);
     } catch (error) {
       setSubmitting(false);
@@ -89,10 +86,12 @@ export const ResetPassword = () => {
         <Box sx={{ width: 340 }} mx="auto">
           <Title order={2}>Esqueceu a senha?</Title>
           <Text size="md" sx={{ marginBottom: '0.5rem' }}>
-            Informe o seu e-mail e enviaremos
-            um link para redefinir sua senha.
+            Informe o seu e-mail e enviaremos um link para redefinir sua senha.
           </Text>
-          <form onSubmit={resetPasswordForm.onSubmit(handleResetPassword)} className={classes.form}>
+          <form
+            onSubmit={resetPasswordForm.onSubmit(handleResetPassword)}
+            className={classes.form}
+          >
             <TextInput
               required
               label="Seu e-mail"
@@ -113,7 +112,11 @@ export const ResetPassword = () => {
             <Center
               position="right"
               mt="md"
-              sx={{ marginTop: '0.5rem', flexDirection: 'column', gap: '0.5rem' }}
+              sx={{
+                marginTop: '0.5rem',
+                flexDirection: 'column',
+                gap: '0.5rem',
+              }}
             >
               <Button
                 size="lg"
@@ -139,7 +142,10 @@ export const ResetPassword = () => {
       <div className={classes.formWrapper}>
         <Box sx={{ width: 340 }} mx="auto">
           <Title order={2}>Redefinir a senha</Title>
-          <form onSubmit={resetPasswordForm.onSubmit(handleResetPasswordSubmit)} className={classes.form}>
+          <form
+            onSubmit={resetPasswordForm.onSubmit(handleResetPasswordSubmit)}
+            className={classes.form}
+          >
             <TextInput
               required
               label="Seu código de confirmação"
@@ -167,7 +173,11 @@ export const ResetPassword = () => {
             <Center
               position="right"
               mt="md"
-              sx={{ marginTop: '0.5rem', flexDirection: 'column', gap: '0.5rem' }}
+              sx={{
+                marginTop: '0.5rem',
+                flexDirection: 'column',
+                gap: '0.5rem',
+              }}
             >
               <Button
                 size="lg"
@@ -189,8 +199,6 @@ export const ResetPassword = () => {
   );
 
   return (
-    <div>
-      {!codeSent ? renderRequestCodeForm() : renderConfirmationForm()}
-    </div>
+    <div>{!codeSent ? renderRequestCodeForm() : renderConfirmationForm()}</div>
   );
 };
