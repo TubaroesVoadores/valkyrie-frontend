@@ -143,10 +143,19 @@ export const LoginPage = () => {
           </form>
         </Box>
       </div>
-
       <div className={classes.imageWrapper}>
         <img src={Fundo} alt="fundo" />
       </div>
+      <Anchor
+        className={classes.link}
+        component={Link}
+        to="/"
+        size="sm"
+        color="green"
+        underline
+      >
+        Voltar à pagina inicial
+      </Anchor>
     </div>
   );
 };
