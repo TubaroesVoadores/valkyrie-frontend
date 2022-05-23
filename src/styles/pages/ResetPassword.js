@@ -46,4 +46,12 @@ export const useResetPasswordStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
+  link: {
+    position: 'absolute',
+    top: '1rem',
+    left: '1rem',
+    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      top: '2rem',
+    },
+  },
 }));

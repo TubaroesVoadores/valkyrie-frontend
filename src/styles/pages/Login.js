@@ -33,7 +33,6 @@ export const useLoginStyles = createStyles((theme) => ({
     flexDirection: 'column',
     gap: '1rem',
   },
-
   imageWrapper: {
     background: theme.colors.green[1],
     width: '50%',
@@ -45,6 +44,14 @@ export const useLoginStyles = createStyles((theme) => ({
     },
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       display: 'none',
+    },
+  },
+  link: {
+    position: 'absolute',
+    top: '1rem',
+    left: '1rem',
+    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      top: '2rem',
     },
   },
 }));
