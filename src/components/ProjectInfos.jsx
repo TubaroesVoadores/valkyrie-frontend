@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Image,
   Paper,
@@ -8,14 +8,20 @@ import {
   useMantineTheme,
   SimpleGrid,
 } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { useModals } from '@mantine/modals';
 
+import { ProjectImagesSheet } from './index';
 import { useProjectInfosStyles } from '../styles';
 
 export const ProjectInfos = ({ project }) => {
   const theme = useMantineTheme();
   const modals = useModals();
+  const matches = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
   const { classes } = useProjectInfosStyles();
+
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [image, setImage] = useState(null);
 
   const {
     nativeForestAreaPercent,
@@ -38,15 +44,20 @@ export const ProjectInfos = ({ project }) => {
     };
   }, [project]);
 
-  const handleOpenImage = (image) => {
-    modals.openContextModal('ProjectImages', {
-      title: 'Detalhes da imagem',
-      centered: true,
-      size: 'xl',
-      innerProps: {
-        image,
-      },
-    });
+  const handleOpenImage = (currentImage) => {
+    if (!matches) {
+      modals.openContextModal('ProjectImages', {
+        title: 'Detalhes da imagem',
+        centered: true,
+        size: 'xl',
+        innerProps: {
+          image: currentImage,
+        },
+      });
+    } else {
+      setImage(currentImage);
+      setIsSheetOpen(true);
+    }
   };
 
   return (
@@ -79,18 +90,27 @@ export const ProjectInfos = ({ project }) => {
           className={classes.imagesGrid}
         >
           {
-            images.map((image) => (
+            images.map((currentImage) => (
               <Image
-                key={image.id}
-                src={image.s3link}
+                key={currentImage.id}
+                src={currentImage.s3link}
                 radius="xs"
                 withPlaceholder
-                onClick={() => handleOpenImage(image)}
+                onClick={() => handleOpenImage(currentImage)}
               />
             ))
           }
         </SimpleGrid>
       </div>
+      {
+        image && (
+          <ProjectImagesSheet
+            isOpen={isSheetOpen}
+            onClose={() => setIsSheetOpen(false)}
+            image={image}
+          />
+        )
+      }
     </div>
   );
 };

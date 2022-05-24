@@ -20,14 +20,14 @@ export const useProjectStyles = createStyles((theme) => ({
   },
   heading: {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      flexDirection: 'column',
-      alignItems: 'normal',
-      gap: '1rem',
-    },
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: '0.5rem',
+  },
+  breadcrumbs: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   projectInfos: {
     margin: '2rem 0 0',
