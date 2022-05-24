@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import {
   Title, Button, useMantineTheme, Loader, Center,
@@ -8,7 +8,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { useModals } from '@mantine/modals';
 import { API } from 'aws-amplify';
 
-import { WithHeader, ProjectsList } from '../components';
+import { WithHeader, ProjectsList, NewProjectSheet } from '../components';
 import { useProjectsStyles } from '../styles';
 
 const Projects = () => {
@@ -17,6 +17,8 @@ const Projects = () => {
   const matches = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
   const { classes } = useProjectsStyles();
 
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
   const { data: projects, status } = useQuery('projects', async () => {
     const response = await API.get('projects', '/projects');
 
@@ -24,10 +26,14 @@ const Projects = () => {
   });
 
   const handleNewProject = () => {
-    modals.openContextModal('NewProject', {
-      title: 'Criar novo projeto',
-      centered: true,
-    });
+    if (!matches) {
+      modals.openContextModal('NewProject', {
+        title: 'Criar novo projeto',
+        centered: true,
+      });
+    } else {
+      setIsSheetOpen(true);
+    }
   };
 
   return (
@@ -57,6 +63,10 @@ const Projects = () => {
           )
         }
       </div>
+      <NewProjectSheet
+        isOpen={isSheetOpen}
+        onClose={() => setIsSheetOpen(false)}
+      />
     </div>
   );
 };

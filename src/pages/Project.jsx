@@ -28,14 +28,14 @@ const Project = () => {
             Projects
           </Anchor>
           <Title>{project ? project.name : 'Project'}</Title>
-          {
-            project && (
-              <Badge color="green" radius="sm" size="md" variant="filled">
-                {project.status}
-              </Badge>
-            )
-          }
         </div>
+        {
+          project && (
+            <Badge color="green" radius="sm" size="md" variant="filled">
+              {project.status}
+            </Badge>
+          )
+        }
       </div>
       <div className={classes.projectInfos}>
         {
