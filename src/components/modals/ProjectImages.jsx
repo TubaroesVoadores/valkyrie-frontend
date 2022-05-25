@@ -32,43 +32,45 @@ export const ProjectImages = ({ innerProps: { image } }) => {
 
   return (
     <div className={classes.wrapper}>
-      <Transition
-        mounted={isOverlayVisible}
-        transition="fade"
-        duration={500}
-        timingFunction="ease"
-      >
-        {(styles) => (
-          <Overlay
-            style={styles}
-            gradient="linear-gradient(0deg, rgba(0,0,0,0.7) 70%, transparent 100%)"
-            zIndex={5}
-            sx={{ height: '37%', top: 'unset' }}
-            onMouseLeave={() => setOverlayVisibility(false)}
-            onMouseEnter={() => setOverlayVisibility(true)}
-            radius="sm"
-            className={classes.overlay}
-          >
-            <Text color="white">{`Latitude: ${lat}`}</Text>
-            <Text color="white">{`Longitude: ${log}`}</Text>
-            <Text color="white">{`Area da propriedade: ${area} km²`}</Text>
-            <Text color="white">{`Floresta nativa: ${nativeForest}%`}</Text>
-            <Button
-              className={classes.button}
-              onClick={() => setIsOriginalOpen(!isOriginalOpen)}
+      <div className={classes.image}>
+        <Transition
+          mounted={isOverlayVisible}
+          transition="fade"
+          duration={500}
+          timingFunction="ease"
+        >
+          {(styles) => (
+            <Overlay
+              style={styles}
+              gradient="linear-gradient(0deg, rgba(0,0,0,0.7) 70%, transparent 100%)"
+              zIndex={5}
+              sx={{ height: '27%', top: 'unset' }}
+              onMouseLeave={() => setOverlayVisibility(false)}
+              onMouseEnter={() => setOverlayVisibility(true)}
+              radius="sm"
+              className={classes.overlay}
             >
-              {!isOriginalOpen ? 'Ver imagem filtrada' : 'Ver imagem original'}
-            </Button>
-          </Overlay>
-        )}
-      </Transition>
-      <Image
-        src={!isOriginalOpen ? originalImage : filteredImage}
-        withPlaceholder
-        radius="sm"
-        onMouseLeave={() => setOverlayVisibility(false)}
-        onMouseEnter={() => setOverlayVisibility(true)}
-      />
+              <Text color="white">{`Latitude: ${lat}`}</Text>
+              <Text color="white">{`Longitude: ${log}`}</Text>
+              <Text color="white">{`Area da propriedade: ${area} km²`}</Text>
+              <Text color="white">{`Floresta nativa: ${nativeForest}%`}</Text>
+            </Overlay>
+          )}
+        </Transition>
+        <Image
+          src={!isOriginalOpen ? originalImage : filteredImage}
+          withPlaceholder
+          radius="sm"
+          onMouseLeave={() => setOverlayVisibility(false)}
+          onMouseEnter={() => setOverlayVisibility(true)}
+        />
+      </div>
+      <Button
+        className={classes.button}
+        onClick={() => setIsOriginalOpen(!isOriginalOpen)}
+      >
+        {!isOriginalOpen ? 'Ver imagem filtrada' : 'Ver imagem original'}
+      </Button>
     </div>
   );
 };

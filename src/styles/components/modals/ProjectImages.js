@@ -5,7 +5,9 @@ export const useProjectImagesStyles = createStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    gap: '1rem',
+    gap: '0.5rem',
+  },
+  image: {
     position: 'relative',
   },
   overlay: {

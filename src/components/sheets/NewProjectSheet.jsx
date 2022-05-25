@@ -12,7 +12,7 @@ export const NewProjectSheet = ({ isOpen, onClose }) => {
     <Sheet
       isOpen={isOpen}
       onClose={onClose}
-      snapPoints={[360]}
+      snapPoints={[380]}
       initialSnap={0}
     >
       <Sheet.Container>
