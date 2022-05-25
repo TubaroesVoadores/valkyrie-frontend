@@ -43,18 +43,18 @@ export const NewProject = () => {
 
   return (
     <div className={classes.wrapper}>
-      <Text>Envie aqui sua mensagem</Text>
+      <Text>Envie aqui sua solicitação de criação de projeto</Text>
       <form className={classes.form}>
         <TextInput
           required
-          label="Nome"
+          label="Nome do projeto"
           placeholder="Nome do projeto"
           {...newProjectForm.getInputProps('nameProject')}
         />
         <Textarea
           required
           autosize
-          label="Descrição"
+          label="Descrição do projeto"
           placeholder="Digite a descrição do projeto"
           minRows={2}
           maxRows={5}
