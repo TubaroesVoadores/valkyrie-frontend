@@ -13,9 +13,12 @@ import {
   Textarea,
   Image,
 } from '@mantine/core';
+
 import { useScrollIntoView } from '@mantine/hooks';
+import { Forest } from '../components';
 
 import { useLandingStyles } from '../styles';
+
 import Landing from '../assets/landing.svg';
 
 const formSchema = Yup.object().shape({
@@ -59,28 +62,22 @@ export const LandingPage = () => {
 
   return (
     <>
-      <div className={classes.contentWrapper}>
-        <div style={classes.textWrapper}>
+      <div className={classes.wrapper}>
+        <div className={classes.informationWrapper}>
           <Title style={{ fontSize: '4rem' }}>Valkyrie</Title>
           <Text
             align="center"
             component="p"
             size="md"
-            style={{ width: 400, textAlign: 'justify' }}
+            className={classes.description}
           >
-            Solução inteligente para latifúndios com o objetivo de sensoriar a
-            presente área de vegetação nativa na Amazônia.
+            Solução inteligente para documentação de áreas de vegetação
+            nativa de propriedades no território amazônico.
           </Text>
-          <div
-            style={{
-              width: 106,
-              marginTop: 18,
-              display: 'flex',
-              gap: '1rem',
-            }}
-          >
+          <div className={classes.buttonsWrapper}>
             <Button
               onClick={() => navigate('/login')}
+              style={{ width: '100%' }}
               size="md"
               type="button"
               color="green"
@@ -88,6 +85,7 @@ export const LandingPage = () => {
               Acessar a plataforma
             </Button>
             <Button
+              style={{ width: '100%' }}
               onClick={scrollIntoView}
               size="md"
               type="button"
@@ -97,10 +95,8 @@ export const LandingPage = () => {
             </Button>
           </div>
         </div>
-        <div className={classes.imageWrapper}>
-          <Image src={Landing} alt="fundo" />
-        </div>
       </div>
+      <Forest />
       <div className={classes.formWrapper} ref={targetRef}>
         <Paper withBorder shadow="md" p={24} radius="md" className={classes.form}>
           <form
