@@ -65,7 +65,7 @@ export const LandingPage = () => {
     <>
       <div className={classes.wrapper}>
         <div className={classes.informationWrapper}>
-          <Title style={{ fontSize: '4rem' }}>Valkyrie</Title>
+          <Title className={classes.titleStyle}>Valkyrie</Title>
           <Text
             align="center"
             component="p"
