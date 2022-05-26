@@ -14,7 +14,6 @@ export const useLandingStyles = createStyles((theme) => ({
       justifyContent: 'center',
     },
   },
-
   imageWrapper: {
     width: '40%',
     marginRight: '100px',
@@ -23,18 +22,21 @@ export const useLandingStyles = createStyles((theme) => ({
       display: 'none',
     },
   },
-
   formWrapper: {
     width: '100%',
-    height: '700px',
+    height: '100vh',
     display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
     background: theme.colors.green[1],
   },
-
   form: {
-    width: '50%',
-
+    width: '35%',
+    form: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1rem',
+    },
     label: {
       fontSize: '15px',
     },
