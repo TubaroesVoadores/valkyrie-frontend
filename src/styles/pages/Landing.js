@@ -19,13 +19,17 @@ export const useLandingStyles = createStyles((theme) => ({
 
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       margin: '0',
-      paddingBottom: '100px',
+      transform: 'translateY(-100px)',
     },
+  },
+
+  titleStyle: {
+    fontSize: '4rem',
   },
 
   description: {
     width: '400px',
-    textAlign: 'justify',
+    textAlign: 'left',
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       width: '300px',
     },
