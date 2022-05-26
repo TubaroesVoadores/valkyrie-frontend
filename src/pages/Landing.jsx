@@ -1,9 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import { API } from 'aws-amplify';
+
 import { useForm, yupResolver } from '@mantine/form';
+
 import * as Yup from 'yup';
+
 import {
   TextInput,
   Paper,
@@ -11,15 +16,13 @@ import {
   Text,
   Button,
   Textarea,
-  Image,
 } from '@mantine/core';
 
 import { useScrollIntoView } from '@mantine/hooks';
+
 import { Forest } from '../components';
 
 import { useLandingStyles } from '../styles';
-
-import Landing from '../assets/landing.svg';
 
 const formSchema = Yup.object().shape({
   name: Yup.string().min(4, 'Seu nome deve conter no mínimo 4 caracteres').required('Nome é obrigatório'),
