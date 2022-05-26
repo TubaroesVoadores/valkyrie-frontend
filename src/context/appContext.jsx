@@ -80,7 +80,7 @@ export const AppContextProvider = ({ children }) => {
   };
 
   const logOut = async () => {
-    await Auth.signOut({ global: true });
+    await Auth.signOut();
     setCurrentUser(null);
     setLoading(false);
   };
