@@ -6,9 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { API } from 'aws-amplify';
 
 import { useForm, yupResolver } from '@mantine/form';
-
 import * as Yup from 'yup';
-
 import {
   TextInput,
   Paper,
