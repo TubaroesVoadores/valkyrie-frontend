@@ -16,6 +16,11 @@ export const useLandingStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+
+    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+      margin: '0',
+      paddingBottom: '100px',
+    },
   },
 
   description: {
