@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import { API } from 'aws-amplify';
 
 import { useForm, yupResolver } from '@mantine/form';
@@ -14,12 +16,13 @@ import {
   Text,
   Button,
   Textarea,
-  Image,
 } from '@mantine/core';
 
-import { useLandingStyles } from '../styles';
+import { useScrollIntoView } from '@mantine/hooks';
 
-import Landing from '../assets/landing.svg';
+import { Forest } from '../components';
+
+import { useLandingStyles } from '../styles';
 
 const formSchema = Yup.object().shape({
   name: Yup.string().min(4, 'Seu nome deve conter no mínimo 4 caracteres').required('Nome é obrigatório'),
@@ -31,11 +34,9 @@ const formSchema = Yup.object().shape({
 export const LandingPage = () => {
   const { classes } = useLandingStyles();
   const navigate = useNavigate();
-  const viewport = useRef();
-
-  const executeScroll = () => viewport.current.scrollIntoView({ behavior: 'smooth' });
 
   const [isLoading, setIsLoading] = useState(false);
+  const { scrollIntoView, targetRef } = useScrollIntoView({ axis: 'y', offset: -300 });
 
   const landingForm = useForm({
     schema: yupResolver(formSchema),
@@ -64,48 +65,46 @@ export const LandingPage = () => {
 
   return (
     <>
-      <div className={classes.contentWrapper}>
-        <div style={classes.textWrapper}>
-          <Title style={{ fontSize: 70 }}>Valkyrie</Title>
+      <div className={classes.wrapper}>
+        <div className={classes.informationWrapper}>
+          <Title style={{ fontSize: '4rem' }}>Valkyrie</Title>
           <Text
             align="center"
             component="p"
             size="md"
-            style={{ width: 400, textAlign: 'justify' }}
+            className={classes.description}
           >
-            Solução inteligente para latifúndios com o objetivo de sensoriar a
-            presente área de vegetação nativa na Amazônia.
+            Solução inteligente para documentação de áreas de vegetação
+            nativa de propriedades no território amazônico.
           </Text>
-          <div style={{ width: 106, marginTop: 18, display: 'flex' }}>
+          <div className={classes.buttonsWrapper}>
             <Button
               onClick={() => navigate('/login')}
+              style={{ width: '100%' }}
               size="md"
-              type="submit"
+              type="button"
               color="green"
-              style={{ marginRight: 10 }}
             >
               Acessar a plataforma
             </Button>
             <Button
+              style={{ width: '100%' }}
+              onClick={scrollIntoView}
               size="md"
-              type="submit"
+              type="button"
               color="green"
-              onClick={executeScroll}
             >
               Entre em contato
             </Button>
           </div>
         </div>
-        <div className={classes.imageWrapper}>
-          <Image src={Landing} alt="fundo" />
-        </div>
       </div>
-      <div className={classes.formWrapper} ref={viewport}>
-        <form
-          onSubmit={landingForm.onSubmit(sendEmail)}
-          className={classes.form}
-        >
-          <Paper withBorder shadow="md" p={30} mt={200} radius="md">
+      <Forest />
+      <div className={classes.formWrapper} ref={targetRef}>
+        <Paper withBorder shadow="md" p={24} radius="md" className={classes.form}>
+          <form
+            onSubmit={landingForm.onSubmit(sendEmail)}
+          >
             <TextInput
               label="Nome"
               placeholder="Seu nome"
@@ -116,20 +115,22 @@ export const LandingPage = () => {
               label="Email"
               placeholder="email@exemplo.com"
               required
-              mt="md"
               {...landingForm.getInputProps('email')}
             />
             <Textarea
               placeholder="Digite aqui sua mensagem"
               label="Sua mensagem"
               required
+              autosize
+              minRows={2}
+              maxRows={5}
               {...landingForm.getInputProps('description')}
             />
-            <Button mt="md" type="submit" loading={isLoading}>
+            <Button type="submit" loading={isLoading} size="md">
               {isLoading ? 'Enviando email' : 'Enviar email'}
             </Button>
-          </Paper>
-        </form>
+          </form>
+        </Paper>
       </div>
     </>
   );
