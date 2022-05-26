@@ -19,7 +19,7 @@ export const useLandingStyles = createStyles((theme) => ({
 
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       margin: '0',
-      transform: 'translateY(-100px)',
+      transform: 'translateY(-150px)',
     },
   },
 
