@@ -25,7 +25,7 @@ const Project = () => {
       <div className={classes.heading}>
         <div className={classes.breadcrumbs}>
           <Anchor component={Link} to="/projects" size="lg" color="green">
-            Projects
+            Projetos
           </Anchor>
           <Title>{project ? project.name : 'Project'}</Title>
         </div>

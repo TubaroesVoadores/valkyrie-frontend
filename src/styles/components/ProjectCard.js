@@ -10,6 +10,7 @@ export const useProjectCardStyles = createStyles((theme) => ({
     boxShadow: theme.shadows.sm,
     border: '1px solid rgba(0, 0, 0, 0.1)',
     position: 'relative',
+    cursor: 'pointer',
   },
   title: {
     fontWeight: 500,
