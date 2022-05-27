@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowUpRight } from 'react-feather';
-import { Text, ActionIcon } from '@mantine/core';
+import { Text, ActionIcon, Paper } from '@mantine/core';
 
 import { useProjectCardStyles } from '../styles';
 
@@ -19,7 +19,7 @@ export const ProjectCard = (props) => {
   };
 
   return (
-    <div className={classes.wrapper}>
+    <Paper onClick={handleClick} className={classes.wrapper}>
       <Text className={classes.title}>{name}</Text>
       <div className={classes.detailsSection}>
         <div className={classes.details}>
@@ -40,6 +40,6 @@ export const ProjectCard = (props) => {
       >
         <ArrowUpRight size={20} />
       </ActionIcon>
-    </div>
+    </Paper>
   );
 };
